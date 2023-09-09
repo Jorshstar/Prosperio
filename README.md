@@ -1,1 +1,1 @@
-#To be updated with the right routes
+#To be updated with the right routes paths
