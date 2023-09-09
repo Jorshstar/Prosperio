@@ -4,12 +4,12 @@ import validator from 'validator'
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: [true, 'A user must have a name'],
+        required: [true, 'A user must have a First name'],
         trim: true
     },
     lastName: {
         type: String,
-        required: [true, 'A user must have a name'],
+        required: [true, 'A user must have a Last name'],
         trim: true
     },
     userName: {
