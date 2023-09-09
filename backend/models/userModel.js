@@ -2,15 +2,24 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-    firstname: {
+    firstName: {
         type: String,
         required: [true, 'A user must have a name'],
+        trim: true
+    },
+    lastName: {
+        type: String,
+        required: [true, 'A user must have a name'],
+        trim: true
+    },
+    userName: {
+        type: String,
+        required: [true, 'A user must have a username'],
         unique: true,
         trim: true
     },
-    lastname: {
+    phone_number: {
         type: String,
-        required: [true, 'A user must have a name'],
         unique: true,
         trim: true
     },
@@ -28,28 +37,19 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         trim: true
     },
-    passwordConfirm: {
+    confirmPassword: {
         type: String,
         required: [true, 'A user must have a password'],
         minlength: 8,
         trim: true
     },
-    username: {
-        type: String,
-        required: [true, 'A user must have a username'],
-        unique: true,
-        trim: true
-    },
-    phone_number: {
-        type: String,
-        unique: true,
-        trim: true
-    },
+   
+    
     bio: {
         type: String,
         trim: true
     },
-    photo: {
+    profilePicture: {
         type: String,
         trim: true
     }
