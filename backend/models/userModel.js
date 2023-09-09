@@ -1,0 +1,44 @@
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'A user must have a name'],
+        unique: true
+    },
+    email: {
+        type: String,
+        required: [true, 'A user must have an email'],
+        unique: true,
+        lowercase: true,
+    },
+    password: {
+        type: String,
+        required: [true, 'A user must have a password'],
+        minlength: 8
+    },
+    passwordConfirm: {
+        type: String,
+        required: [true, 'A user must have a password'],
+        minlength: 8
+    },
+    username: {
+        type: String,
+        required: [true, 'A user must have a username'],
+        unique: true
+    },
+    phone_number: {
+        type: String,
+        unique: true
+    },
+    bio: {
+        type: String
+    },
+    photo: {
+        type: String
+    }
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
