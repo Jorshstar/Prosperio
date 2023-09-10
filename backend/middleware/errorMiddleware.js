@@ -1,3 +1,5 @@
+import validationResult from 'express-validator'
+
 const notFound = (req, res, next) => {
     const error = new Error(`Not Found - ${req.originalUrl}`);
     res.status(404);
@@ -29,7 +31,7 @@ const validationErrorHandler = (req, res, next) => {
     next();
 }
 
-module.exports = {
+export {
     notFound,
     errorHandler,
     validationErrorHandler,

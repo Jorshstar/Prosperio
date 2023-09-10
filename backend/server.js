@@ -1,16 +1,23 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import {errorHandler, notFound, validationErrorHandler} from './middleware/errorMiddleware'
+import { errorHandler, notFound } from './middleware/errorMiddleware.js'
+import userRoutes from './routes/userRoutes.js'
+import connectDB from './config/db.js';
+import colors from 'colors'
 
 dotenv.config();
-const port = process.env.port || 6000;
+
+const port = process.env.PORT || 6000;
+
+connectDB();
 
 const app = express();
 
-app.get('/', (req, res) => res.send('Server is readyt for start up'));
+app.use('/api/users', userRoutes)
+
+app.get('/', (req, res) => res.send('Server is ready for start up'));
 
 app.use(errorHandler)
 app.use(notFound)
-app.use(validationErrorHandler)
 
 app.listen(port, () => console.log(`server started on port ${port}`));

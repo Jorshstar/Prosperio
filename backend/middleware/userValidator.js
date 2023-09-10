@@ -52,7 +52,7 @@ const validateUpdateProfile = [
 ]
 
 
-module.exports = {
+export {
     validateUserFields,
     validateUpdateProfile,
 }
