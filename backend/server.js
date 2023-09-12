@@ -13,6 +13,10 @@ connectDB();
 
 const app = express();
 
+//middleware to pass incoming request
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
 app.use('/api/users', userRoutes)
 
 app.get('/', (req, res) => res.send('Server is ready for start up'));

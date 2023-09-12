@@ -1,10 +1,33 @@
 import asyncHandler from 'express-async-handler';
-
+import User from '../models/userModel.js'
 
 //@desc Register new user
 //@route Post /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
+
+    const { firstName, lastName, userName, phoneNumber, email, password, confirmPassword } = req.body;
+
+    if (!firstName || !lastName || !phoneNumber || !email || !password || !confirmPassword) {
+        res.status(400)
+        throw new Error('Please add all fields')
+    }
+
+    //checking if the user exists
+    const userExists = await User.findOne
+        ({
+            $or: [
+                { email },
+                { userName }
+            ]
+        })
+
+    if (userExists) {
+        res.status(400)
+        throw new Error('User already exists. Please login!')
+    }
+
+
     res.status(200).json({message: 'Register User'})
 })
 
