@@ -4,7 +4,8 @@ import { body } from "express-validator";
 const validateUserFields = [
     body('email').
         isEmail()
-        .withMessage('Please provide a valid email address'),
+        .withMessage('Please provide a valid email address')
+        .isLowercase(),
     body('password')
         .isLength({ min: 8 })
         .withMessage('Password must be at least 8 characters long')

@@ -1,7 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel';
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken';
+
 
 //@desc Register new user
 //@route Post /api/users
@@ -14,52 +12,6 @@ return jwt.sign({id}, process.env.JWT_SECRET, {
 })
 }
 const registerUser = asyncHandler(async (req, res) => {
-    //Extract user data from the request body
-    const {firstName, lastName, userName, email, password} = req.body;
-
-    // Validate request
-    if(!firstName || !lastName || !userName || !email || !password){
-        res.status(400)
-        throw new Error('Please fill all fields')
-    }
-    //Validate the length of the password
-    if(password.length < 6) {
-        res.status(400)
-        throw new Error("Password must be up to 6 characters");    
-    }
-    //Check if user already exists
-    const userExists =await User.findOne({email})
-    if(userExists) {
-        res.status(400);
-        throw new Error("Email has already been used")
-    }
-    // Create new user
-    const user = await User.create({
-        firstName,
-        lastName,
-        userName,
-        email,
-        password    
-    })
-    // Generate Token with the user id in the database
-    const token = accessToken(user._id)
-    // if user was successfully created.....send a token
-    if(user) {
-        const {_id, userName, email} = user;
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            expires: new Date(Date.now() + 1000 * 86400), // after this day(1) the user will be ask to log in again
-            // secure: true,
-            // samesite: none, // If domain name for frontend and backend are same then 'true
-        })
-        // Send user data
-        res.status(201).json({_id, userName, email, token})
-    } else{
-        res.status(400);
-        throw new Error("Invalid user data");
-    }
-
     res.status(200).json({message: 'Register User'})
 })
 

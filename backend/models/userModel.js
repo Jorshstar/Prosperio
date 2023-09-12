@@ -6,29 +6,28 @@ const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: [true, 'A user must have a First name'],
-        trim: true
+        
     },
     lastName: {
         type: String,
         required: [true, 'A user must have a Last name'],
-        trim: true
+        
     },
     userName: {
         type: String,
         required: [true, 'A user must have a username'],
         unique: true,
-        trim: true
     },
     phoneNumber: {
         type: String,
-        unique: true,
-        trim: true
+        required: [true, 'Please add a phone number'],
+        default: "+234"
     },
     email: {
         type: String,
         required: [true, 'A user must have an email'],
         unique: true,
-        lowercase: true,
+        
     },
     password: {
         type: String,
@@ -42,12 +41,16 @@ const userSchema = new mongoose.Schema({
     
     bio: {
         type: String,
-        trim: true
+        maxLength: [250, "Bio must not be more than 250 characters"],
+        default: "bio",
     },
     profilePicture: {
         type: String,
         trim: true
     }
+},
+{
+    timestamps: true
 });
 
 
