@@ -1,13 +1,14 @@
 import express from 'express';
 const router = express.Router();
 import { 
-    deletePriofile,
+    deleteProfile,
     getMe,
     loginUser,
     logoutUser,
     registerUser,
-    updatePriofile,
+    updateProfile,
 } from '../controllers/userController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 // User registration route
 router.post('/', registerUser)
@@ -16,16 +17,16 @@ router.post('/', registerUser)
 router.post('/login', loginUser)
 
 // User logout route
-router.post('/logout', logoutUser)
+router.get('/logout', logoutUser)
 
 // Get logged-in user's profile route
-router.get('/me', getMe)
+router.get('/me', protect, getMe)
 
 // Update user profile route
-router.put('/me', updatePriofile)
+router.put('/me', updateProfile)
 
 // Delete user profile route
-router.delete('/me', deletePriofile)
+router.delete('/me', deleteProfile)
 
 
 
