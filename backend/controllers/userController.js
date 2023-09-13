@@ -7,11 +7,12 @@ import bcrypt from 'bcryptjs'
 //@desc Register new user
 //@route Post /api/users
 //@access Public
+<<<<<<< HEAD
 
 //Generate token for the user
 const accessToken = (id) => {
-return jwt.sign({id}, process.env.JWT_SECRET, {
-    expiresIn : "1d"
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn : "1d"
 })
 }
 const registerUser = asyncHandler(async (req, res) => {
