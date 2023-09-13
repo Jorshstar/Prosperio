@@ -7,7 +7,6 @@ import bcrypt from 'bcryptjs'
 //@desc Register new user
 //@route Post /api/users
 //@access Public
-<<<<<<< HEAD
 
 //Generate token for the user
 const accessToken = (id) => {
