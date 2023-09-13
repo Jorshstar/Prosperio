@@ -17,4 +17,3 @@ router
     .delete(productController.deleteProduct)
 
 export default router;
-
