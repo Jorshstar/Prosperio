@@ -1,4 +1,7 @@
 import asyncHandler from 'express-async-handler';
+import User from '../models/userModel';
+import { jwt } from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'
 
 
 //@desc Register new user
@@ -12,10 +15,51 @@ return jwt.sign({id}, process.env.JWT_SECRET, {
 })
 }
 const registerUser = asyncHandler(async (req, res) => {
-    res.status(200).json({message: 'Register User'})
+    //Extract user data from the request body
+    const {firstName, lastName, userName, email, password} = req.body;
+
+    // Validate request
+    if(!firstName || !lastName || !userName || !email || !password){
+        res.status(400)
+        throw new Error('Please fill all fields')
+    }
+    //Validate the length of the password
+    if(password.length < 6) {
+        res.status(400)
+        throw new Error("Password must be up to 6 characters");    
+    }
+    //Check if user exists
+    const userExists =await User.findOne({email})
+    if(userExists) {
+        res.status(400);
+        throw new Error("Email has already been used")
+    }
+    // Create new user
+    const user = await User.create({
+        firstName,
+        lastName,
+        userName,
+        email,
+        password    
+    })
+    // Generate Token
+    const token = accessToken(user._id)
+    if(user) {
+        const {_id, userName, email} = user;
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true,
+            expires: new Date(Date.now() + 1000 * 86400),
+            // secure: true,
+            // samesite: none
+        })
+        // Send user data
+        res.status(201).json({_id, userName, email, token})
+    } else{
+        res.status(400);
+        throw new Error("Invalid user data");
+    }
 })
-
-
 
 //@desc Authenticate a user
 //@route POST /api/login
@@ -37,9 +81,10 @@ if(!user){
 }
 
 // User exists, check if password is correct
+//compare the password to the hashed password stored in the database
 const passwordIsCorrect = await bcrypt.compare(password, user.password)
 // Generate token to log the user in
-const token = generateToken(user._id)
+const token = accessToken(user._id)
     if(user && passwordIsCorrect) {
         const newUser = await User.findOne({ email }).select("-password")
         res.cookie("token", token, {
@@ -92,21 +137,60 @@ const getMe = asyncHandler(async (req, res) => {
 //@route PUT /api/users/me
 //@access private
 const updateProfile = asyncHandler(async (req, res) => {
-    res.status(200).json({message: 'Update User Profile'})
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        const { firstName, lastName, userName, 
+            phoneNumber, bio, profilePicture } = user; 
+        user.firstName = req.body.firstName || firstName;
+        user.lastName = req.body.lastName || lastName;
+        user.userName = req.body.userName || userName;
+        user.phoneNumber = req.body.phoneNumber || phoneNumber;
+        user.bio = req.body.bio || bio;
+
+        const updatedProfile = await user.save()
+        res.status(200).json(updatedProfile)
+    } else {
+        res.status(404);
+        throw new Error("User not found")
+    }
 })
 
 //@desc Delete user profile
 //@route DELETE /api/users/me
 //@access private
 const deleteProfile = asyncHandler(async (req, res) => {
-    res.status(200).json({message: 'Delete User Profile'})
+    const userId = req.user._id;
+    const user = await User.findById(req.user._id);
+    // If user is found
+    if(user) {
+         // Check if the authenticated user's ID matches the ID in the request
+         if (String(userId) === String(user._id)) {
+            // Delete the user's profile
+            await user.remove();
+            res.status(200).json({ message: "Profile deleted successfully" });
+        } else {
+            res.status(403); // Forbidden status code
+            throw new Error("You are not authorized to delete this profile");
+        }
+    } else {
+        res.status(404)
+        throw new Error("User not found")
+    }
 })
 
 //@desc Upload profile picture
 //@route Post /api/users/upload-profile-picture
 //@access Private
 const uploadProfilePicture = asyncHandler(async (req, res) => {
-    res.status(200).json({message: 'Upload Profile Picture'})
+    const { profilePicture } = req.body.profilePicture;
+    const user = await User.findById(req.user._id);
+    // Get only the profile from db
+    user.profilePicture = profilePicture;
+    const uploadedProfilePicture = await user.save()
+    // send photo to the frontend
+    res.status(200).json(uploadedProfilePicture);
+
 })
 
 

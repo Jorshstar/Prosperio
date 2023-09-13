@@ -7,6 +7,7 @@ import {
     logoutUser,
     registerUser,
     updateProfile,
+    uploadProfilePicture
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -20,13 +21,17 @@ router.post('/login', loginUser)
 router.get('/logout', logoutUser)
 
 // Get logged-in user's profile route
-router.get('/me', protect, getMe)
+router.get('/getMe', protect, getMe)
 
 // Update user profile route
-router.put('/me', updateProfile)
+router.patch('/updateProfile', protect, updateProfile)
 
 // Delete user profile route
-router.delete('/me', deleteProfile)
+router.delete('/deleteProfile', protect, deleteProfile)
+
+// Update user profile photo
+router.put('/uploadProfilePicture', protect,  uploadProfilePicture)
+
 
 
 
