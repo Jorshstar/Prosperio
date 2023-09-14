@@ -14,8 +14,18 @@ function Header() {
               <Logo />{" "}
             </div>
             <div className="flex items-center justify-between w-[25vh] text-xl font-semibold">
-              <Link to='/signup' className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition">Sigup</Link>
-              <Link to='/login' className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition">Login</Link>
+              <Link
+                to="/signup"
+                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition"
+              >
+                Sigup
+              </Link>
+              <Link
+                to="/login"
+                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition"
+              >
+                Login
+              </Link>
             </div>
           </div>
           <div className="flex items-center justify-between h-[80vh]">
