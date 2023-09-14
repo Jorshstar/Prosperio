@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel';
-import { jwt } from 'jsonwebtoken';
+import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'
 
 
@@ -11,18 +11,23 @@ import bcrypt from 'bcryptjs'
 //Generate token for the user
 const accessToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn : "1d"
+        expiresIn : "30d"
 })
 }
 const registerUser = asyncHandler(async (req, res) => {
     //Extract user data from the request body
     const {firstName, lastName, userName, email, password} = req.body;
 
+    console.log('Received request with body:', req.body)
+
     // Validate request
-    if(!firstName || !lastName || !userName || !email || !password){
+    if (!firstName || !lastName || !userName || !email || !password) {
+        console.log('validation failed, please fill all fields')
         res.status(400)
         throw new Error('Please fill all fields')
+
     }
+    console.log('Validation Successful')
     //Validate the length of the password
     if(password.length < 6) {
         res.status(400)
@@ -66,15 +71,15 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access Public
 const loginUser = asyncHandler(async (req, res) => {
 const { email, userName, password} = req.body;
-const usernameOrEmail = email || userName;
+const usernameOremail = email || userName;
 
 // Validate Request
-if(!usernameOrEmail || !password) {
+if(!usernameOremail || !password) {
     res.status(400);
     throw new Error("Please add email or username and password")    
 } 
 // check if user exists
-const user = await User.findOne({usernameOrEmail})
+const user = await User.findOne({usernameOremail})
 if(!user){
     res.status(400);
     throw new Error("User does not exist");
