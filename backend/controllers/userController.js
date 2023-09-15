@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel';
-import { jwt } from 'jsonwebtoken';
+import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'
 
 
@@ -16,7 +16,7 @@ const accessToken = (id) => {
 }
 const registerUser = asyncHandler(async (req, res) => {
     //Extract user data from the request body
-    const {firstName, lastName, userName, email, password} = req.body;
+    const {firstName, lastName, userName, email, password, confirmPassword} = req.body;
 
     // Validate request
     if(!firstName || !lastName || !userName || !email || !password){
@@ -40,7 +40,8 @@ const registerUser = asyncHandler(async (req, res) => {
         lastName,
         userName,
         email,
-        password    
+        password,
+        confirmPassword
     })
     // Generate Token
     const token = accessToken(user._id)
