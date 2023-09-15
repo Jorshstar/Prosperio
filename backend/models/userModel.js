@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: [true, 'Please add a phone number'],
+        required: [false, 'Please add a phone number'],
         default: "+234"
     },
     email: {
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     },
     confirmPassword: {
         type: String,
-        required: [true, 'A user must have a password'],
+        required: [false, 'A user must have a password'],
     },
    
     
