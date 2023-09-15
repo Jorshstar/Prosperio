@@ -70,20 +70,28 @@ const registerUser = asyncHandler(async (req, res) => {
 //@route POST /api/login
 //@access Public
 const loginUser = asyncHandler(async (req, res) => {
-const { email, userName, password} = req.body;
-const usernameOremail = email || userName;
+    const { userNameOrEmail, password } = req.body;
+    
+    // Validate Request
+    if(!userNameOrEmail || !password) {
+        res.status(400);
+        throw new Error("Please add email or username and password")    
+    } 
+    //check if user exist
+    const user = await User.findOne({
+        $or: [
+            { userName: userNameOrEmail },
+            { email: userNameOrEmail }
+        ],
+    });
 
-// Validate Request
-if(!usernameOremail || !password) {
-    res.status(400);
-    throw new Error("Please add email or username and password")    
-} 
-// check if user exists
-const user = await User.findOne({usernameOremail})
-if(!user){
-    res.status(400);
-    throw new Error("User does not exist");
+    if(!user){
+        res.status(400);
+        throw new Error("Invalid Credentials");
 }
+
+
+
 
 // User exists, check if password is correct
 //compare the password to the hashed password stored in the database
@@ -91,7 +99,7 @@ const passwordIsCorrect = await bcrypt.compare(password, user.password)
 // Generate token to log the user in
 const token = accessToken(user._id)
     if(user && passwordIsCorrect) {
-        const newUser = await User.findOne({ email }).select("-password")
+        const newUser = await User.findOne({ email: user.email || userNameOrEmail}).select("-password")
         res.cookie("token", token, {
             path: "/",
             httpOnly: true,
@@ -152,6 +160,7 @@ const updateProfile = asyncHandler(async (req, res) => {
         user.userName = req.body.userName || userName;
         user.phoneNumber = req.body.phoneNumber || phoneNumber;
         user.bio = req.body.bio || bio;
+        
 
         const updatedProfile = await user.save()
         res.status(200).json(updatedProfile)

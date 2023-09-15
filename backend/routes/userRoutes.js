@@ -1,5 +1,5 @@
 import express from 'express';
-const router = express.Router();
+
 import { 
     deleteProfile,
     getMe,
@@ -10,18 +10,21 @@ import {
     uploadProfilePicture
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
+import { validateUserFields } from '../middleware/userValidator.js';
+
+const router = express.Router();
 
 // User registration route
-router.post('/', registerUser)
+router.post('/', validateUserFields, registerUser)
 
 // User login route
 router.post('/login', loginUser)
 
 // User logout route
-router.get('/logout', logoutUser)
+router.post('/logout', logoutUser)
 
 // Get logged-in user's profile route
-router.get('/getMe', protect, getMe)
+router.get('/me', protect, getMe)
 
 // Update user profile route
 router.patch('/updateProfile', protect, updateProfile)
