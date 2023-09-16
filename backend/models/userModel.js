@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import validator from 'validator'
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -20,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: [false, 'Please add a phone number'],
+        required: [true, 'Please add a phone number'],
         default: "+234"
     },
     email: {
@@ -56,15 +55,18 @@ const userSchema = new mongoose.Schema({
 
 // Encrypt password before saving to DB
 userSchema.pre("save", async function(next) {
-    if (!this.isModified("password")){
-        return next()
+    if (!this.isModified("password")) {
+        next()
     }
     //Hash password
     const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(this.password, salt)
-    this.password = hashedPassword
-    next()
+    this.password = await bcrypt.hash(this.password, salt)
 })
+
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
+}
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

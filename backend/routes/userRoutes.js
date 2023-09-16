@@ -2,7 +2,7 @@ import express from 'express';
 
 import { 
     deleteProfile,
-    getMe,
+    getProfile,
     loginUser,
     logoutUser,
     registerUser,
@@ -24,10 +24,10 @@ router.post('/login', loginUser)
 router.post('/logout', logoutUser)
 
 // Get logged-in user's profile route
-router.get('/me', protect, getMe)
+router.get('/me', protect, getProfile)
 
 // Update user profile route
-router.patch('/updateProfile', protect, updateProfile)
+router.put('/updateProfile', protect, updateProfile)
 
 // Delete user profile route
 router.delete('/deleteProfile', protect, deleteProfile)

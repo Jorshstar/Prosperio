@@ -1,24 +1,15 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'
+import generateToken from '../utils/generateToken.js';
 
 
 //@desc Register new user
 //@route Post /api/users
 //@access Public
 
-//Generate token for the user
-const accessToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn : "30d"
-})
-}
 const registerUser = asyncHandler(async (req, res) => {
     //Extract user data from the request body
     const {firstName, lastName, userName, email, password} = req.body;
-
-    console.log('Received request with body:', req.body)
 
     // Validate request
     if (!firstName || !lastName || !userName || !email || !password) {
@@ -34,10 +25,17 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Password must be up to 6 characters");    
     }
     //Check if user exists
-    const userExists =await User.findOne({email})
-    if(userExists) {
+    const userExists = await User.findOne
+        ({
+            $or: [
+                { email },
+                { userName }
+            ]
+        })
+    
+    if (userExists) {
         res.status(400);
-        throw new Error("Email has already been used")
+        throw new Error("User alreagy exists. Please login!")
     }
     // Create new user
     const user = await User.create({
@@ -45,26 +43,37 @@ const registerUser = asyncHandler(async (req, res) => {
         lastName,
         userName,
         email,
-        password    
+        password, 
     })
-    // Generate Token
-    const token = accessToken(user._id)
-    if(user) {
-        const {_id, userName, email} = user;
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            expires: new Date(Date.now() + 1000 * 86400),
-            // secure: true,
-            // samesite: none
-        })
-        // Send user data
-        res.status(201).json({_id, userName, email, token})
-    } else{
-        res.status(400);
-        throw new Error("Invalid user data");
-    }
-})
+    
+    if (user) {
+        generateToken(res, user._id)
+        const {
+            _id,
+            firstName,
+            lastName,
+            userName,
+            email,
+            profilePicture,
+            phoneNumber,
+            bio
+        } = user;
+    res.status(201).json({
+      _id,
+      firstName,
+      lastName,
+      userName,
+      email,
+      profilePicture,
+      phoneNumber,
+      bio,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
+
 
 //@desc Authenticate a user
 //@route POST /api/login
@@ -72,11 +81,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { userNameOrEmail, password } = req.body;
     
-    // Validate Request
-    if(!userNameOrEmail || !password) {
-        res.status(400);
-        throw new Error("Please add email or username and password")    
-    } 
     //check if user exist
     const user = await User.findOne({
         $or: [
@@ -85,65 +89,72 @@ const loginUser = asyncHandler(async (req, res) => {
         ],
     });
 
-    if(!user){
-        res.status(400);
-        throw new Error("Invalid Credentials");
-}
+    //proceed with login
+    if (user && (await user.matchPassword(password))) {
+        generateToken(res, user._id)
+        const {
+            _id,
+            firstName,
+            lastName,
+            userName,
+            email,
+            profilePicture,
+            phoneNumber,
+            bio
+        } = user;
+    res.status(201).json({
+      _id,
+      firstName,
+      lastName,
+      userName,
+      email,
+      profilePicture,
+      phoneNumber,
+      bio,
+      message: 'User logged in successfully',
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid user data");
+  }
+});
 
-
-
-
-// User exists, check if password is correct
-//compare the password to the hashed password stored in the database
-const passwordIsCorrect = await bcrypt.compare(password, user.password)
-// Generate token to log the user in
-const token = accessToken(user._id)
-    if(user && passwordIsCorrect) {
-        const newUser = await User.findOne({ email: user.email || userNameOrEmail}).select("-password")
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            expires: new Date(Date.now() + 1000 * 86400), 
-            // secure: true,
-            // samesite: none, 
-        })
-        // Send user data
-        res.status(201).json(newUser)
-    } else {
-        res.status(400);
-        throw new Error("Invalid username and password")    
-    }
-
-})
 
 //@desc Logout user profile
 //@route POST /api/users/me
 //@access public
 const logoutUser = asyncHandler(async (req, res) => {
   // To logout the user  you need to end the token used while logging in
-    res.cookie("token", "", {
-        path: "/",
+    res.cookie("jwt", "", {
         httpOnly: true,
         expires: new Date(0),
-        // secure: true,
-        // samesite: none,
-    })
-    return res.status(200).json({message: "Successfully logged out!"})
+    });
+    
+    res.status(200).json({ message: "Successfully logged out!" });
 })
 
 //@desc Get user Profile
 //@route Get /api/users/me
 //@access private
-const getMe = asyncHandler(async (req, res) => {
-    // Get the user from the req.user
-    const user = await User.findById(req.user._id).select(-password);
-    if (user){ // send user to the frontend
-        res.status(200).json(user);
-    } else {
-        res.status(401);
-        throw new Error("User Not Found");
-    }
-   
+const getProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+  if (user) {
+    const { _id, firstName, lastName, userName, email, profilePicture, phoneNumber, bio } = user;
+    res.status(200).json({
+      _id,
+      firstName,
+      lastName,
+      userName,
+      phoneNumber,
+      email,
+      profilePicture,
+      bio,
+    });
+  } else {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
 })
 
 //@desc Update user profile
@@ -219,7 +230,7 @@ export {
     registerUser,
     loginUser,
     logoutUser,
-    getMe,
+    getProfile,
     updateProfile,
     deleteProfile,
     uploadProfilePicture,
