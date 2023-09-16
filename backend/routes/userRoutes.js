@@ -14,6 +14,36 @@ import { validateUserFields } from '../middleware/userValidator.js';
 
 const router = express.Router();
 
+// Route for email verification
+router.get('/verify-email', async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    res.status(400).json({ message: 'Missing verification token' });
+    return;
+  }
+
+  try {
+    // Verify the JWT token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Find the user by email and update the email verification status
+    const user = await User.findOneAndUpdate(
+      { email: decoded.email },
+      { isEmailVerified: true, emailVerificationToken: null }
+    );
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.json({ message: 'Email verified successfully' });
+  } catch (error) {
+    res.status(400).json({ message: 'Invalid verification token' });
+  }
+});
+
 // User registration route
 router.post('/', validateUserFields, registerUser)
 

@@ -43,9 +43,10 @@ const userSchema = new mongoose.Schema({
         maxLength: [250, "Bio must not be more than 250 characters"],
         default: "bio",
     },
-    profilePicture: {
+    photo: {
         type: String,
-        trim: true
+        required: [true, "Please add a photo"],
+        default: "https://i.ibb.co/4pDNDk1/avatar.png"
     }
 },
 {
