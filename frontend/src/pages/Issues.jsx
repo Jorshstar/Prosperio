@@ -44,9 +44,9 @@ export default function Issues() {
         <p className="text-lg w-[100%] text-center">You can contact us via the contacts listed below:</p>
           <div className="w-[80%] flex flex-col items-start justify-center">
             
-          <p className="flex items-center justify-center gap-3 hover:text-red-500"><BsTelephone/> +2349036788725</p>
-          <p className="flex items-center justify-center gap-3 hover:text-red-500"><GrMail className="text-black"/> your.exa.ple@gmail.com</p>
-          <p className="flex items-center justify-center gap-3 hover:text-red-500"><BsTwitter className="text-blue-500"/> @Jodfhgnsngd</p>
+          <p className="flex items-center justify-center gap-3 "><BsTelephone/> +2349036788725</p>
+          <p className="flex items-center justify-center gap-3 "><GrMail className="text-black"/> your.exa.ple@gmail.com</p>
+          <p className="flex items-center justify-center gap-3"><BsTwitter className="text-blue-500"/> @Jodfhgnsngd</p>
           </div>
         </div>
       </div>
