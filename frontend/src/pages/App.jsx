@@ -5,9 +5,10 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import Board from "./Board";
 import Products from "./Products";
-import Accounts from "./Accounts";
 import Issues from "./Issues";
 import Settings from "./Settings";
+import Profile from "./Profile";
+import Updateprofile from "./Updateprofile";
 function App() {
   return (
     <Routes>
@@ -17,7 +18,8 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />
-        <Route path="/dashboard/accounts" element={<Accounts />} />
+        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/dashboard/update" element={<Updateprofile />} />
         <Route path="/dashboard/issues" element={<Issues />} />
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>

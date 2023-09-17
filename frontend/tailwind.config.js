@@ -7,5 +7,10 @@ export default {
   theme: {
     extend: {},
   },
+  variants:{
+    extend: {
+      display:['group-focus']
+    },
+  },
   plugins: [],
 }
