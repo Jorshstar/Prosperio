@@ -1,11 +1,23 @@
 import Product from '../models/productModels.js';
 
+//@desc Register new product
+//@route POST /api/products
 const createProduct = async (req, res) => {
     try {
-        const newTour = await Product.create(req.body);
+        const name = req.body.name;
+        const checkName = await Product.findOne({name});
+        if (checkName) {
+            const err = new Error('Product with that name already exists');
+            err.statusCode = 400;
+            return res.status(400).json({
+                error: err.message
+            });
+        }
+
+        const newProduct = await Product.create(req.body);
         
         res.status(201).json({
-            data: newTour
+            data: newProduct
         });
     } catch (err) {
         res.status(400).json({
@@ -14,6 +26,8 @@ const createProduct = async (req, res) => {
     }
 }
 
+//@desc Get all products
+//@route GET /api/products
 const getProducts = async (req, res) => {
     try {
         const products = await Product.find().sort('-createdAt');
@@ -29,9 +43,11 @@ const getProducts = async (req, res) => {
     }
 }
 
+//@desc Search product
+//@route GET api/products/search?name=productname
 const getProductByName = async (req, res) => {
     try {
-        const { name }  = req.query;
+        const { name } = req.query;
         const product = await Product.findOne({name});
 
         if (!product) { 
@@ -52,9 +68,19 @@ const getProductByName = async (req, res) => {
     }
 }
 
+//@desc Update product
+//@route PATCH api/products/search?name=productname
 const updateProduct = async (req, res, next) => {
     try {
         const { name } = req.query;
+        if (req.body.name === name) {
+            const err = new Error('Product name cannot be changed');
+            err.statusCode = 400;
+            return res.status(400).json({
+                error: err.message
+            });
+        }
+
         const payload = req.body;
         const product = await Product.findOneAndUpdate({ name} , payload, {
             new: true,
@@ -81,6 +107,8 @@ const updateProduct = async (req, res, next) => {
     }
 }
 
+//@desc Delete product
+//@route DELETE api/products/search?name=productname
 const deleteProduct = async (req, res) => {
     try {
         const { name } = req.query;
