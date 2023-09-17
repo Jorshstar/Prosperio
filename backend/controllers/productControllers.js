@@ -31,7 +31,7 @@ const getProducts = async (req, res) => {
 
 const getProductByName = async (req, res) => {
     try {
-        const name = req.params.name;
+        const { name }  = req.query;
         const product = await Product.findOne({name});
 
         if (!product) { 
@@ -54,7 +54,7 @@ const getProductByName = async (req, res) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-        const name = req.params.name;
+        const { name } = req.query;
         const payload = req.body;
         const product = await Product.findOneAndUpdate({ name} , payload, {
             new: true,
@@ -83,7 +83,7 @@ const updateProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res) => {
     try {
-        const name = req.params.name;
+        const { name } = req.query;
         const product = await Product.findOneAndDelete({name});
 
         if (!product) { 
