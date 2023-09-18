@@ -9,6 +9,7 @@ import Issues from "./Issues";
 import Settings from "./Settings";
 import Profile from "./Profile";
 import Updateprofile from "./Updateprofile";
+import Addproducts from "./Addproducts";
 function App() {
   return (
     <Routes>
@@ -18,6 +19,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />
+        <Route path="/dashboard/addproducts" element={<Addproducts />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/dashboard/update" element={<Updateprofile />} />
         <Route path="/dashboard/issues" element={<Issues />} />

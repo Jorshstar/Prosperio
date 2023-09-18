@@ -4,11 +4,11 @@ import {GrMail} from 'react-icons/gr'
 export default function Issues() {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex items-start justify-center w-[90%] gap-10 mt-10">
-        <div className="bg-white rounded-lg shadow-lg w-[50%] h-[70vh] ">
+      <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
+        <div className="bg-white rounded-lg shadow-lg w-[50%] h-[70vh]">
         <h2 className="text-2xl font-bold ">Contact Us</h2>
           <form className="">
-            <div className="">
+            <div className=" ">
               <label htmlFor="subject" className="block font-bold">
                 Subject
               </label>

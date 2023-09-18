@@ -1,112 +1,68 @@
-
-import { MdCloudUpload, MdDelete } from 'react-icons/md';
-import { AiFillFileImage } from 'react-icons/ai';
-import { useState } from 'react';
+import milo from '../assets/milo.png'
 
 export default function Products() {
   
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState("No selected file");
+ 
   return (
-     <div className="flex flex-col items-center justify-center">
-      <div className="flex items-start justify-center w-[90%] gap-10 mt-10">
-        <div className="bg-white rounded-lg shadow-lg w-[40vw] h-[100%] ">
-        <h2 className="text-2xl font-bold ">Add Products</h2>
-          <form className="">
-            <div className="">
-              <label htmlFor="subject" className="font-bold">
-                product Name:
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                placeholder="product Name"
-                className="w-full border border-gray-400 p-2 rounded-lg"
-              />
-              <label htmlFor="" className="font-bold">
-                Product Category:
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                placeholder="Product Category"
-                className="w-full border border-gray-400 p-2 rounded-lg"
-              />
-              <label htmlFor="" className="font-bold">Product Price:</label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                placeholder="Product Price"
-                className="w-full border border-gray-400 p-2 rounded-lg"
-              />
-              <label htmlFor="" className="font-bold">Product Quatity:</label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                placeholder="Product Quatity"
-                className="w-full border border-gray-400 p-2 rounded-lg"
-              />
-            </div>
-            <div className="">
-              <label htmlFor="message" className=" font-bold">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={7}
-                placeholder="Enter message"
-                className="w-full border border-gray-400 p-2 rounded-lg"
-              />
-            </div>
-            
-          </form>
-        </div>
-        <div className="w-[50%] flex flex-col justify-center gap-5">
-          <b> Product Image: <span className="text-neutral-500">Jpg, Png, Jpeg</span></b>
-          
+    <div className="flex flex-col justify-center w-[80vw]">
+    <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
+      <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] flex flex-col items-center justify-center ">
+        <div className="h-[100%] w-[95%] ">
+          <h2 className="text-2xl font-bold ">Add Products</h2>
 
-      <form  className='flex flex-col items-center justify-center h-[300px] w-[500px] cursor-pointer rounded-xl bg-white shadow-lg' onClick={() => document.querySelector(".input-field").click()}>
-        <input
-          type="file"
-          accept='image/*'
-          className='input-field'
-          hidden
-          onChange={({ target: { files } }) => {
-            files[0] && setFileName(files[0].name);
-            if (files) {
-              setImage(URL.createObjectURL(files[0]));
-            }
-          }}
-        />
-        {image ? (
-          <img src={image} width={150} height={150} alt={fileName} />
-        ) : (
-          <>
-            <MdCloudUpload color='#1475cf' size={60} />
-            <p>Browse Files to upload</p>
-          </>
-        )}
-      </form>
-      <section className='flex items-center justify-between p-[15px] rounded-3xl bg-white shadow-lg'>
-        <AiFillFileImage color='#1475cf' />
-        <span className='flex items-center'>
-          {fileName} -{' '}
-          <MdDelete
-            onClick={() => {
-              setFileName("No selected File");
-              setImage(null);
-            }}
-          />
-        </span>
-      </section>
-    
+          <p className="font-bold border-t-2 border-b-2 border-gray-300 my-2">
+            Products Avaliability :{" "}
+            <span className="text-green-700 font-semibold">In Stock</span>
+          </p>
+        </div>
+
+        <div className="h-[73vh] w-[95%] ">
+          <p>
+            <b className="red bg-red-500 p-1 mb-2 text-xl text-white">Name:</b>{" "}
+            <span className="">Milo</span>
+          </p>
+          <p>
+            <b className="">SKU: BEV</b>{" "}
+            <span className="text-gray-500 font-semibold">
+              -183547496489307
+            </span>
+          </p>
+          <p>
+            <b className="">Categories:</b>{" "}
+            <span className="text-gray-500 font-semibold ml-3">
+              Beverages
+            </span>
+          </p>
+          <p>
+            <b className="">Price:</b>{" "}
+            <span className="text-gray-500 font-semibold ml-3">#600</span>
+          </p>
+          <p>
+            <b className="">Quantity in Stock:</b>{" "}
+            <span className="text-gray-500 font-semibold ml-3">10</span>
+          </p>
+          <p className="border-b-2 border-gray-300">
+            <b className="">Total value in Stock:</b>{" "}
+            <span className="text-gray-500 font-semibold ml-3">#6000</span>
+          </p>
+          <b>Description:</b>
+          <p className="text-gray-500 font-semibold">
+            Milo is a popular chocolate malt beverage known for its harmonious
+            blend of chocolate and malt flavors with a hint of caramel.
+            Enjoyed hot or cold, it combines cocoa, malted barley, and milk
+            solids to create a comforting and energizing drink. Often
+            fortified with essential vitamins and minerals, Milo provides both
+            a delicious taste and nutritional value. Its a beloved beverage
+            among people of all ages and can be enjoyed on its own or used in
+            various recipes, making it a versatile and cherished drink.
+          </p>
         </div>
       </div>
+      <div className="w-[45%]">
+        <p className='text-xl'>Product Image:</p>
+        <img src={milo} alt="Image of a milo" />
+      </div>
     </div>
+  </div>
   )
 }
