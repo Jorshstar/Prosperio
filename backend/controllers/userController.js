@@ -3,6 +3,8 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import sendEmail from '../config/emailSender.js';
+import Token from '../models/tokenModels.js'
+import crypto from 'crypto' 
 
 //@desc Register new user
 //@route Post /api/users
@@ -41,43 +43,19 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("User alreagy exists. Please login!")
     }
 
-    //Checking if the user email is already verified
-    const existingUser = await User.findOne({ email })
-    let isEmailVerified = false
-    if (existingUser && existingUser.isEmailVerified) {
-        //setting the validation status to true if the email is verified
-        isEmailVerified = true
-    }
-    //Generate a verification token only for new users or unverified emails
-    let verificationToken = null;
-    if (!isEmailVerified) {
-        verificationToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-            expiresIn: '1d'
-        })
-    }
-
+    
     // Create new user
     const user = await User.create({
         firstName,
         lastName,
-        userName,
-        email,
+        userName,        email,
         password,
         isEmailVerified,
         emailVerificationToken: verificationToken,
 
     })
 
-    if (!isEmailVerified) {
-        //sending verification email for only new users or unverified mails
-        const verificationLink = `${process.env.BASE_URL}/verify-email?token=${verificationToken}`;
-        const emailContent = `<p>Hi ${user.firstName},</p>
-        <p> Thank you for regiistering on our platform. Please click below to verify your email:</p>
-        <a href = "${verificationLink}">${verificationLink}</a>
-        <p>If you didnt register on our platform , you can safely ignore this email.</p>`;
-
-        await sendEmail(user.email, 'Email Verification', emailContent)
-    }
+    
     
     if (user) {
         generateToken(res, user._id)
@@ -178,7 +156,7 @@ const getProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
   if (user) {
-    const { _id, firstName, lastName, userName, email, profilePicture, phoneNumber, bio } = user;
+    const { _id, firstName, lastName, userName, email, photo, phoneNumber, bio } = user;
     res.status(200).json({
       _id,
       firstName,
@@ -186,13 +164,24 @@ const getProfile = asyncHandler(async (req, res) => {
       userName,
       phoneNumber,
       email,
-      profilePicture,
+      photo,
       bio,
     });
   } else {
     res.status(400);
     throw new Error("User Not Found");
   }
+})
+
+//@desc Get login Status
+//@route Get /api/users/loggedin
+//@access private
+const loginStatus = asyncHandler(async (req, res) => {
+    if (req.user && req.user.isLoggedIn) {
+        res.json(false)
+    } else {
+        res.json(true)
+    }
 })
 
 //@desc Update user profile
@@ -275,15 +264,118 @@ const deleteProfilePicture = asyncHandler(async (req, res) => {
     res.status(200).json({message: 'Delete Profile Picture'})
 })
 
+//@desc Forgot Password
+//@route POST /api/users/forgotPassword
+//@access private
+const forgotPassword = asyncHandler(async (req, res) => {
+   const { email } = req.body;
+
+  // Check if the user exists i.e if email exists
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  // Generate a reset token if user exists
+    //create a reset Token
+    const resetToken = crypto
+        .randomBytes(32)
+        .toString("hex") + user._id
+
+    console.log(resetToken)
+    
+    //Hash Token before saving to the Database
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex")
+    
+    // Save the reset token in the database
+    await new Token({
+        userId: user._id,
+        token: hashedToken,
+        createdAt: Date.now(),
+        expiresAt: Date.now() + 30 * (60 * 1000)//30m
+    }).save()
+
+    //construct Reset Link
+    const resetLink = `${process.env.BASE_URL}/resetpassword/${resetToken}`;
+    // Send the reset password email
+    const message = `<h2>Hello ${user.userName},</h2>
+        <p>You are receiving this email because you requested a password reset for your account.</p>
+        <p>This link is valid for 30 min.</p>
+        <p>Please click the following link to reset your password:</p>
+        <a href=${resetLink} clicktracking=off>${resetLink}</a>
+        <p>If you didn't request this, please ignore this email.</p>
+        <p> Prosperio team</p>`;
+    
+    const subject = "Password Reset Request"
+    const send_to = user.email
+    const sent_from = process.env.User
+
+    try {
+        await sendEmail(subject, message, send_to, sent_from)
+        res.status(200).json({
+            success: true,
+            message: 'Password reset email sent. Please check your email for further instructions.',
+        });
+    } catch (error) {
+        res.status(500)
+        throw new Error("Email Not Sent, Please Try Again")
+    }
+});
+
+//@desc Reset user password
+//@route PUT /api/users/reset-password/:resetToken
+//@access Private
+const resetPassword = asyncHandler(async (req, res) => {
+    const { password } = req.body;
+    const { resetToken } = req.params
+    
+    //Hash Token then compare to Token in the database
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex")
+    
+    //finding the token in the database that belongs to the user
+    const userToken = await Token.findOne({
+        //hashed token
+        token: hashedToken,
+        //checking if the token has expired
+        expiresAt: {$gt: Date.now()}
+    });
+
+    if (!userToken) {
+        res.status(400)
+        throw new Error('Invalid or expired token')
+    }
+
+    //Finding the user if the token has not expired
+    const user = await User.findOne({
+        _id: userToken.userId
+    })
+    user.password = password
+    await user.save()
+    res.status(200).json({
+        message: "Password successfully reset. Plerase Login!"
+    })
+
+})
+    
 export {
     registerUser,
     loginUser,
     logoutUser,
     getProfile,
+    loginStatus,
     updateProfile,
     deleteProfile,
     uploadProfilePicture,
-    deleteProfilePicture
-
+    deleteProfilePicture,
+    forgotPassword,
+    resetPassword,
 
 };

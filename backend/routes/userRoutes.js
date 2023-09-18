@@ -7,7 +7,10 @@ import {
     logoutUser,
     registerUser,
     updateProfile,
-    uploadProfilePicture
+    uploadProfilePicture,
+    loginStatus,
+    forgotPassword,
+    resetPassword,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { validateUserFields } from '../middleware/userValidator.js';
@@ -56,11 +59,20 @@ router.post('/logout', logoutUser)
 // Get logged-in user's profile route
 router.get('/me', protect, getProfile)
 
+// Get logged-in user's profile route
+router.get('/loggedin', protect, loginStatus)
+
 // Update user profile route
 router.put('/updateProfile', protect, updateProfile)
 
 // Delete user profile route
 router.delete('/deleteProfile', protect, deleteProfile)
+
+// forgot Password
+router.post('/forgotPassword', forgotPassword)
+
+// forgot Password
+router.put('/resetPassword/:resetToken', resetPassword)
 
 // Update user profile photo
 router.put('/uploadProfilePicture', protect,  uploadProfilePicture)
