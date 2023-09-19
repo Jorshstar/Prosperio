@@ -1,6 +1,7 @@
 import { BsListCheck } from "react-icons/bs";
 import { GiShoppingCart } from "react-icons/gi";
 import { TbCurrencyNaira, TbShoppingCartX } from "react-icons/tb";
+import Table from "../components/table";
 
 
 export default function Board() {
@@ -57,9 +58,7 @@ export default function Board() {
           />
         </div>
       </div>
-      <div className="border-2 border-red-500 h-[60%] w-[98%]">
-        slider
-      </div>
+      <div className="h-[60%] w-[98%]"><Table/></div>
     </div>
   );
 }
