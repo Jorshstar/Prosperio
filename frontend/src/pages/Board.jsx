@@ -8,7 +8,7 @@ export default function Board() {
   return (
     <div className="w-full flex flex-col items-center gap-5 justify-center  h-[90vh]">
       <div className="flex items-center justify-between  h-[20%] w-[98%] text-white">
-        <div className=" w-[20%] h-[90%] rounded-xl bg-[#0F1377] flex items-center justify-evenly">
+        <button className=" w-[20%] h-[90%] rounded-xl bg-[#0F1377] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#0F1377] duration-300">
           <div>
             <GiShoppingCart className="text-4xl font-semibold" />
           </div>
@@ -16,8 +16,8 @@ export default function Board() {
             <p>Total Products</p>
             <p>20</p>
           </div>
-        </div>
-        <div className=" w-[20%] h-[90%] rounded-xl bg-[#0A6502] flex items-center justify-evenly">
+        </button>
+        <button className=" w-[20%] h-[90%] rounded-xl bg-[#0A6502] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#0A6502] duration-300">
           <div>
             <TbCurrencyNaira className="text-4xl " />
           </div>
@@ -25,8 +25,8 @@ export default function Board() {
             <p>Total Stock Value</p>
             <p>20,000</p>
           </div>
-        </div>
-        <div className=" w-[20%] h-[90%] rounded-xl bg-[#850707] flex items-center justify-evenly">
+        </button>
+        <button className=" w-[20%] h-[90%] rounded-xl bg-[#850707] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#850707] duration-300">
           <div>
             <TbShoppingCartX className="text-4xl" />
           </div>
@@ -34,8 +34,8 @@ export default function Board() {
             <p>Out of Stock</p>
             <p>4</p>
           </div>
-        </div>
-        <div className=" w-[20%] h-[90%] rounded-xl bg-[#530441] flex items-center justify-evenly">
+        </button>
+        <div className=" w-[20%] h-[90%] rounded-xl bg-[#530441] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#530441] duration-300">
           {" "}
           <div>
             <BsListCheck className="text-4xl " />
