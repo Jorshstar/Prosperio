@@ -20,6 +20,7 @@ function Login() {
         <input type="password" name="" id="" placeholder="Password"  className="w-[60%] outline-none border-2 border-slate-400  text-center rounded-xl h-[7%]"/>
         <input type="password" name="" id="" placeholder="Comfirm Password" className="w-[60%] outline-none border-2 border-slate-400  text-center rounded-xl h-[7%]"/>
         <button className="w-[60%] bg-red-500 h-[7%] text-white font-bold rounded-xl"><Link to='/Signup'>Sign Up</Link></button>
+        
         <p className="text-xl font-bold">Already have an account? <Link to='/Signup' className="text-red-500">Log In</Link></p>
       </div>
     </div>

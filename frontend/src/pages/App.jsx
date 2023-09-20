@@ -10,12 +10,16 @@ import Settings from "./Settings";
 import Profile from "./Profile";
 import Updateprofile from "./Updateprofile";
 import Addproducts from "./Addproducts";
+import Forgetten from "./Forgetten";
+import Reset from "./Reset";
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signin />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/resetpassword" element={<Reset/>}/>
+      <Route path="/login/forgottenPassword" element={<Forgetten/>}/>
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />
