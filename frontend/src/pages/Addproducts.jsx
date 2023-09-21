@@ -9,7 +9,7 @@ export default function Addproducts() {
     <div className="flex flex-col justify-center w-[80vw]">
       <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
         <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] ">
-        <h2 className="text-2xl font-bold ">Update Products Details</h2>
+        <h2 className="text-2xl font-bold ">Add Products Details</h2>
           <form className="">
             <div className="">
               <label htmlFor="subject" className="font-bold">

@@ -12,6 +12,7 @@ import Updateprofile from "./Updateprofile";
 import Addproducts from "./Addproducts";
 import Forgetten from "./Forgetten";
 import Reset from "./Reset";
+import Editproduct from "./Editproduct";
 function App() {
   return (
     <Routes>
@@ -23,6 +24,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />
+        <Route path="/dashboard/editproduct" element={<Editproduct/>}/>
         <Route path="/dashboard/addproducts" element={<Addproducts />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/dashboard/update" element={<Updateprofile />} />
