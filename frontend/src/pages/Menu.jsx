@@ -44,13 +44,19 @@ export default function Menu() {
             to="/dashboard/products"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:text-red-500"
           >
-            In Stock
+            Product details
+          </Link>
+          <Link
+            to="/dashboard/editproduct"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:text-red-500"
+          >
+            Update product
           </Link>
           <Link
             to="/dashboard/addproducts"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:text-red-500"
           >
-            Edit Stock
+            Add product
           </Link>
         </div>
       )}

@@ -70,7 +70,7 @@ export default function Table() {
         <td className="flex items-center justify-evenly mt-2"><BsEye className="text-[#0F1377]"/> <HiOutlineRefresh className="text-[#0A6502]"/> <ImBin className="text-[#850707]"/></td>
       </tr>
     </table>
-      <p className="text-center w-full text-slate-400">All rights reserved © 2023</p>
+      <p className="text-center w-full text-slate-400">Team Prosperio © 2023</p>
   </div>
   )
 }

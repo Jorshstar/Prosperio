@@ -58,6 +58,7 @@ function Signup() {
         <p className="text-3xl font-bold">Sign Up</p>
           </div>
         </div>
+
         <input
           type="text"
           name="Firstname" 
@@ -112,6 +113,8 @@ function Signup() {
         <Link to='/Signup' className="w-[60%] bg-red-500 h-[7%] text-white text-center items-center font-bold rounded-xl"><button onClick={submitHandler} >Sign Up</button></Link>
         
         <p className="text-xl font-bold">Already have an account? <Link to='/Signup' className="text-red-500">Log In</Link></p>
+
+
       </div>
     </div>
   );
