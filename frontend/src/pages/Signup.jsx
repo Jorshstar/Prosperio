@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from "react-router-dom";
 import log from "../assets/log.png";
 import Logo from "../components/Logo1";
+
 import { toast } from 'react-toastify';
 import Loader from "../components/Loader";
 import { useRegisterMutation } from "../slices/usersApiSlice";
@@ -43,9 +44,6 @@ function Signup() {
       }
     }
   }
-
-
-
 
 
   return (
