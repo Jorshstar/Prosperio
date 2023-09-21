@@ -20,7 +20,7 @@ export default function Reset() {
         <Link to='/dashboard/board' className="w-full bg-red-500 h-[20%] text-white font-bold rounded-xl text-center flex items-center justify-center"><button >Reset Password</button></Link>
 
         <div className="w-full ">
-        <Link to='/login' className=" text-right h-[15%] underline">login</Link>
+        <Link to='/Signup' className=" text-right h-[15%] underline">login</Link>
         </div>
       
         </div>
