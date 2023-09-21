@@ -1,12 +1,38 @@
 import { Link } from "react-router-dom/dist";
-
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import { logout } from "../slices/authSlice";
 
 
 export default function Dasheader() {
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate('/signup');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
-    <div className="flex items-center justify-between w-[80vw] h-[10vh]  bg-white rounded-md shadow-lg px-5">
-<p className="font-bold text-xl">Hello, <Link to='/dashboard/profile' className="text-red-500">Joshua</Link></p>  
-<Link to='/signup' className="bg-red-500 text-white font-semibold text-center p-3 rounded-[50px] w-[100px]">Log Out</Link>      
+    <div className="flex items-center justify-between w-[80vw] h-[10vh] bg-white rounded-md shadow-lg px-5">
+      <p className="font-bold text-xl">
+        Hello, {userInfo ? <Link to='/dashboard/profile' className="text-red-500">{userInfo.userName}</Link> : "Guest"}
+      </p>
+      <Link to='/signup' className="bg-red-500 text-white font-semibold text-center p-3 rounded-[50px] w-[100px]" onClick={logoutHandler}>
+        Log Out
+      </Link>
     </div>
   );
 }

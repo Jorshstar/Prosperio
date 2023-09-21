@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../components/Home";
-import Signin from "./Signup";
-import Login from "./Login";
+import Signin from "./Signin"
+import Signup from "./Signup";
 import Dashboard from "./Dashboard";
 import Board from "./Board";
 import Products from "./Products";
@@ -10,12 +10,16 @@ import Settings from "./Settings";
 import Profile from "./Profile";
 import Updateprofile from "./Updateprofile";
 import Addproducts from "./Addproducts";
+ 
+
+
 function App() {
   return (
     <Routes>
+      
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signin />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Signup />} />
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />

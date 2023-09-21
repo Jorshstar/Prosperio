@@ -4,6 +4,7 @@ import generateToken from '../utils/generateToken.js';
 import sendEmail from '../config/emailSender.js';
 import Token from '../models/tokenModels.js'
 import crypto from 'crypto' 
+import jwt from 'jsonwebtoken'
 
 //@desc Register new user
 //@route Post /api/users
@@ -47,11 +48,9 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         firstName,
         lastName,
-        userName,        email,
+        userName,
+        email,
         password,
-        isEmailVerified,
-        emailVerificationToken: verificationToken,
-
     })
 
     
@@ -91,6 +90,8 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { userNameOrEmail, password } = req.body;
 
+    console.log('Received request with body:', req.body)
+
     //check if user exist
     const user = await User.findOne({
         $or: [
@@ -100,10 +101,13 @@ const loginUser = asyncHandler(async (req, res) => {
     });
 
     if (!user) {
+        console.log('validation failed, please fill all fields')
         res.status(400)
         throw new Error("User not found, please signup")
     }
 
+    
+    console.log('Validation Successful')
     //proceed with login
     if (user && (await user.matchPassword(password))) {
         generateToken(res, user._id)
@@ -176,12 +180,17 @@ const getProfile = asyncHandler(async (req, res) => {
 //@route Get /api/users/loggedin
 //@access private
 const loginStatus = asyncHandler(async (req, res) => {
-    if (req.user && req.user.isLoggedIn) {
-        res.json(false)
-    } else {
-        res.json(true)
-    }
-})
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json(false);
+  }
+  // Verify Token
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (verified) {
+    return res.json(true);
+  }
+  return res.json(false);
+});
 
 //@desc Update user profile
 //@route PUT /api/users/me

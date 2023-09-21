@@ -32,10 +32,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'A user must have a password'],
     },
-    confirmPassword: {
-        type: String,
-        required: [false, 'A user must have a password'],
-    },
+    
    
     
     bio: {
