@@ -4,29 +4,43 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         unique: true,
-        required: [true, 'Enter name of product']
+        required: [true, 'Enter name of product'],
+        trim: true,
     },
     category: {
         type: String,
-        required: [true, 'Enter category of product']
+        required: [true, 'Enter category of product'],
+        trim: true,
     },
     price: {
-        type: Number,
-        required: [true, 'Product must have a price']
+        type: String,
+        required: [true, 'Product must have a price'],
+        trim: true,
     },
     quantity: {
-        type: Number,
-        required: [true, 'Enter the quantity of product available']
+        type: String,
+        required: [true, 'Enter the quantity of product available'],
+        trim: true,
     },
-    description: String,
-    photo : String,
+    description: {
+        type: String,
+        required: [true, "Product must have a description"],
+        trim: true,
+    },
+    image: {
+        type: Object,
+        default: {},
+    },
     value: {
         type: Number
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    }
+    user: {
+        type: mongoose.Schema.ObjectId,
+        required: true,
+        ref: "User",
+    },
+}, {
+    timestamps: true,
 });
 
 productSchema.pre('save', function (next) {

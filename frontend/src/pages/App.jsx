@@ -13,6 +13,7 @@ import Addproducts from "./Addproducts";
 import Forgetten from "./Forgetten";
 import Reset from "./Reset";
 import Editproduct from "./Editproduct";
+import PrivateRoute from "../components/privateRoute";
 
 
 function App() {
@@ -32,8 +33,11 @@ function App() {
         <Route path="/dashboard/products" element={<Products />} />
         <Route path="/dashboard/editproduct" element={<Editproduct/>}/>
         <Route path="/dashboard/addproducts" element={<Addproducts />} />
-        <Route path="/dashboard/profile" element={<Profile />} />
-        <Route path="/dashboard/update" element={<Updateprofile />} />
+        {/*Private Routes*/}
+        <Route path ='' element={<PrivateRoute/>}>
+          <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="/dashboard/update" element={<Updateprofile />} />
+        </Route>
         <Route path="/dashboard/issues" element={<Issues />} />
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>

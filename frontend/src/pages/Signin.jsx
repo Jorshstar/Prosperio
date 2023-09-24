@@ -70,6 +70,11 @@ function Signin() {
           {isLoading && <Loader/> }
           
           <Link to='/dashboard/board' className="w-full bg-red-500 h-[20%] text-white font-bold rounded-xl text-center flex items-center justify-center"><button onClick={submitHandler} >Log In</button></Link>
+          <div className="w-full ">
+            <Link to="/login/forgottenPassword" className=" text-right underline">
+              Forgot Password
+            </Link>
+          </div>
           
         <p className="text-xl font-bold">Dont have an account? <Link to='/login' className="text-red-500">SignUp</Link></p>
           </div>
