@@ -1,56 +1,128 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { MdCloudUpload, MdDelete } from "react-icons/md";
 import { AiFillFileImage } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import Loader from "../components/Loader";
+import { toast } from 'react-toastify';
+import { setCredentials } from "../slices/authSlice";
+import { useUpdateUserMutation } from '../slices/usersApiSlice'
 
-export default function Updateprofile() {
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState("No selected file");
+function Updateprofile() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bio, setBio] = useState('');
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const { userInfo } = useSelector((state) => state.auth);
+  const [updateProfile, { isLoading }] = useUpdateUserMutation();
+  
+  useEffect(() => {
+    setFirstName(userInfo.firstName);
+    setLastName(userInfo.lastName);
+    setUserName(userInfo.userName);
+    setEmail(userInfo.email);
+    setPhoneNumber(userInfo.phoneNumber);
+    setBio(userInfo.bio);
+    
+  }, [ userInfo.firstName, userInfo.lastName, userInfo.userName, userInfo.email, userInfo.phoneNumber, userInfo.bio]);
+
+  const [profileImage, setProfileImage] = useState("");
+  const [fileName, setFileName] = useState("No Selected file");
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await updateProfile({
+        _id: userInfo._id,
+        firstName,
+        lastName,
+        userName,
+        email,
+        phoneNumber,
+        bio,
+      }).unwrap();
+      console.log(res);
+      dispatch(setCredentials(res));
+      navigate('/dashboard/profile');
+      toast.success("Profile Updated Successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+  
+ 
   return (
     <div className="flex flex-col justify-center w-[80vw]">
-      <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
+      <div className="flex items-start justify-center w-[90%] gap-10 mt-5" onSubmit={submitHandler}>
         <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] ">
-          <h2 className="text-2xl font-bold ">Update Products Details</h2>
-          <form className="">
+          <h2 className="text-2xl font-bold ">Update Profile Details</h2>
+          <form className="" >
             <div className="">
               <label htmlFor="subject" className="font-bold">
-                Name :
+                Firstname :
               </label>
               <input
                 type="text"
-                id="subject"
-                name="subject"
-                placeholder="Joshua Akinbode"
+                id="firstName"
+                name="firstName"
+                placeholder="First Name"
                 className="w-full border border-gray-400 p-2 rounded-lg"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <label htmlFor="subject" className="font-bold">
+                Lastname :
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Last Name"
+                className="w-full border border-gray-400 p-2 rounded-lg"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
               <label htmlFor="" className="font-bold">
                 Username :
               </label>
               <input
                 type="text"
-                id="subject"
-                name="subject"
-                placeholder="Jorshstar"
+                id='userName'
+                name="userName"
+                placeholder="UserName"
                 className="w-full border border-gray-400 p-2 rounded-lg"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
               />
               <label htmlFor="" className="font-bold">
                 Email :
               </label>
               <input
                 type="text"
-                id="subject"
-                name="subject"
-                placeholder="your.example@gmail.com"
+                id="email"
+                name="email"
+                placeholder="email"
                 className="w-full border border-gray-400 p-2 rounded-lg"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <label htmlFor="" className="font-bold">
-                Phone no :
+                Phone number :
               </label>
               <input
                 type="text"
-                id="subject"
-                name="subject"
-                placeholder="080 - 395 - XXX"
+                id='phoneNumber'
+                name="phoneNumber"
+                placeholder="PhoneNumber"
                 className="w-full border border-gray-400 p-2 rounded-lg"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div className="">
@@ -58,13 +130,22 @@ export default function Updateprofile() {
                 Message
               </label>
               <textarea
-                id="message"
-                name="message"
+                name="bio"
                 rows={6}
-                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lectus auctor, bibendum tortor id, laoreet enim.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lectus auctor, bibendum tortor id, laoreet enim.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac lectus auctor, bibendum tortor id, laoreet enim"
+                placeholder="message"
                 className="w-full border border-gray-400 p-2 rounded-lg"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
               />
             </div>
+
+            <div>
+            
+              <button type='submit' className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-1 rounded mt-0 mb-0">Save Changes</button>
+            
+
+            {isLoading && <Loader/>}
+          </div>
           </form>
         </div>
         <div className="w-[45%] flex flex-col justify-center gap-5">
@@ -86,12 +167,12 @@ export default function Updateprofile() {
               onChange={({ target: { files } }) => {
                 files[0] && setFileName(files[0].name);
                 if (files) {
-                  setImage(URL.createObjectURL(files[0]));
+                  setProfileImage(URL.createObjectURL(files[0]));
                 }
               }}
             />
-            {image ? (
-              <img src={image} width={150} height={150} alt={fileName} />
+            {profileImage ? (
+              <img src={profileImage} width={150} height={150} alt={fileName} />
             ) : (
               <>
                 <MdCloudUpload color="#1475cf" size={60} />
@@ -106,19 +187,17 @@ export default function Updateprofile() {
               <MdDelete
                 onClick={() => {
                   setFileName("No selected File");
-                  setImage(null);
+                  setProfileImage(null);
                 }}
               />
             </span>
           </section>
-          <button
-            type="submit"
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
-          >
-            Save Changes
-          </button>
+
+          
         </div>
       </div>
     </div>
   );
 }
+
+export default Updateprofile
