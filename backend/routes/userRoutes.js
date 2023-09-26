@@ -71,7 +71,7 @@ router.delete('/deleteProfile', protect, deleteProfile)
 // forgot Password
 router.post('/forgotPassword', forgotPassword)
 
-// forgot Password
+// forgot reset Password
 router.put('/resetPassword/:resetToken', resetPassword)
 
 // Update user profile photo
