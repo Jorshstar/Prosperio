@@ -52,6 +52,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    reportIssues: builder.mutation({
+      query: (data) => ({
+        url: `/api/contactUs`,
+        method: 'POST',
+        body: data,
+      })
+    })
   }),
 });
 
@@ -63,4 +70,5 @@ export const {
   useProfileMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useReportIssuesMutation,
 } = usersApiSlice;

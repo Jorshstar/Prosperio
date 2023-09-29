@@ -18,6 +18,7 @@ export default function Forgetten() {
        
        if (response.data) {
          const resetToken = response.data.resetToken
+         toast.success('Password reset link sent')
 
          navigate(`/resetPassword/${resetToken}`)
        }
