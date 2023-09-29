@@ -16,13 +16,13 @@ function Header() {
             <div className="flex items-center justify-between w-[25vh] text-xl font-semibold">
               <Link
                 to="/login"
-                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition"
+                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition no-underline"
               >
                 Sigup
               </Link>
               <Link
                 to="/signup"
-                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition"
+                className="hover:text-red-500 hover:bg-white w-16 text-center rounded-xl transition no-underline"
               >
                 Login
               </Link>
