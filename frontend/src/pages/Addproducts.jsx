@@ -19,7 +19,7 @@ export default function Addproducts() {
                 type="text"
                 id="subject"
                 name="subject"
-                placeholder="product Name"
+                placeholder="product Names"
                 className="w-full border border-gray-400 pt-2 rounded-lg"
               />
               <label htmlFor="" className="font-bold">
