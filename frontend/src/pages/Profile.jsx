@@ -5,7 +5,10 @@ import Loader from "../components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { toast } from 'react-toastify';
+
 import  photo  from '../assets/profile.png';
+import photo from '../assets/profile.png'
+
 
 export default function Profile() {
   const navigate = useNavigate();

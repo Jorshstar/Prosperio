@@ -42,7 +42,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes);
-app.use("/api/contactus", contactRoutes);
+app.use("/api/contactUs", contactRoutes);
 
 app.get('/', (req, res) => res.send('Server is ready for start up'));
 
