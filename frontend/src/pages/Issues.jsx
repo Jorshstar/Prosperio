@@ -16,7 +16,7 @@ export default function Issues() {
                 type="text"
                 id="subject"
                 name="subject"
-                placeholder="Enter subject"
+                placeholder="Enter subject......."
                 className="w-full border border-gray-400 p-2 rounded-lg"
               />
             </div>
