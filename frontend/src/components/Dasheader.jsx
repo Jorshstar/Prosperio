@@ -30,7 +30,7 @@ export default function Dasheader() {
       <p className="font-bold text-xl">
         Hello, {userInfo ? <Link to='/dashboard/profile' className="text-red-500">{userInfo.userName}</Link> : "Guest"}
       </p>
-      <Link to='/signup' className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-2 rounded-[50px] w-[100px]" onClick={logoutHandler}>
+      <Link to='/signup' className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-2 no-underline rounded-[50px] w-[100px]" onClick={logoutHandler}>
         Log Out
       </Link>
     </div>

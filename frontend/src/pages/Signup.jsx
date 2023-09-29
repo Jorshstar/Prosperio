@@ -108,9 +108,9 @@ function Signup() {
 
         {isLoading && <Loader/> }
         
-        <Link to='/Signup' className="w-[60%] bg-red-500 h-[7%] text-white text-center items-center font-bold rounded-xl"><button onClick={submitHandler} >Sign Up</button></Link>
+        <Link to='/Signup' className="w-[60%] bg-red-500 h-[7%] text-white flex justify-center items-center font-bold rounded-xl no-underline"><button onClick={submitHandler} >Sign Up</button></Link>
         
-        <p className="text-xl font-bold">Already have an account? <Link to='/Signup' className="text-red-500">Log In</Link></p>
+        <p className="text-xl font-bold">Already have an account? <Link to='/Signup' className="text-red-500 no-underline">Log In</Link></p>
 
 
       </div>

@@ -2,8 +2,8 @@ import milo from "../assets/milo.png";
 
 export default function Editproducts() {
   return (
-    <div className="flex flex-col justify-center w-[80vw]">
-      <div className="flex items-start justify-center w-[90%] h-[80vh] gap-10 mt-5">
+    <div className="flex flex-col justify-center w-[80vw] h-fit">
+      <div className="flex items-start justify-center w-[90%] h-fit gap-10 mt-5">
         <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] flex flex-col items-center justify-center ">
           <div className="h-[100%] w-[95%] ">
             <h2 className="text-2xl font-bold ">Update Product Details</h2>

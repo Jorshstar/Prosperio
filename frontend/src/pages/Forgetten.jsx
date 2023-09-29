@@ -50,7 +50,7 @@ export default function Forgetten() {
           />
           <Link
             to="#"
-            className="w-full bg-red-500 h-[20%] text-white font-bold rounded-xl text-center flex items-center justify-center"
+            className="w-full bg-red-500 h-[20%] text-white font-bold rounded-xl text-center flex items-center justify-center no-underline"
           >
             <button onClick={handleForgotPassword} disabled={isLoading}>
               Get Email Reset Link

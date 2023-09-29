@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../components/Home";
-import Signin from "./Signin"
+import Signin from "./Signin";
 import Signup from "./Signup";
 import Dashboard from "./Dashboard";
 import Board from "./Board";
@@ -13,31 +13,37 @@ import Addproducts from "./Addproducts";
 import Forgetten from "./Forgetten";
 import Reset from "./Reset";
 import Editproduct from "./Editproduct";
-import PrivateRoute from "../components/privateRoute";
-
+// import PrivateRoute from "../components/privateRoute";
+import Deleteproducts from "./Deleteproducts";
 
 function App() {
   return (
     <Routes>
-      
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signin />} />
 
       <Route path="/login" element={<Signup />} />
 
+
+      <Route path="/resetpassword" element={<Reset />} />
+      <Route path="/login/forgottenPassword" element={<Forgetten />} />
+
       <Route path="/resetPassword/:resetToken" element={<Reset/>}/>
       <Route path="/login/forgottenPassword" element={<Forgetten/>}/>
+
 
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
         <Route path="/dashboard/products" element={<Products />} />
-        <Route path="/dashboard/editproduct" element={<Editproduct/>}/>
+        <Route path="/dashboard/editproduct" element={<Editproduct />} />
         <Route path="/dashboard/addproducts" element={<Addproducts />} />
+        <Route path="/dashboard/deleteproduct" element={<Deleteproducts />} />
+
         {/*Private Routes*/}
-        <Route path ='' element={<PrivateRoute/>}>
-          <Route path="/dashboard/profile" element={<Profile />} />
-          <Route path="/dashboard/update" element={<Updateprofile />} />
-        </Route>
+        {/* <Route path ='' element={<PrivateRoute/>}> */}
+        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/dashboard/update" element={<Updateprofile />} />
+        {/* </Route> */}
         <Route path="/dashboard/issues" element={<Issues />} />
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>

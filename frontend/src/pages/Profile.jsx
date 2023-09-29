@@ -5,7 +5,10 @@ import Loader from "../components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { toast } from 'react-toastify';
+
+import  photo  from '../assets/profile.png';
 import photo from '../assets/profile.png'
+
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -108,7 +111,7 @@ export default function Profile() {
                 <>
                   <div>
                     <Link to="/dashboard/update">
-                      <button className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-1 rounded mt-2">
+                      <button className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-1 rounded mt-2 no-underline">
                         Edit Profile
                       </button>
                     </Link>
