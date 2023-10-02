@@ -11,6 +11,7 @@ import { upload } from '../config/imageUpload.js';
 
 const router = express.Router();
 
+console.log('Receiced request to create a new product')
 router.post("/", protect, upload.single("image"), createProduct);
 router.put("/:id", protect, upload.single("image"), updateProduct);
 router.get("/", protect, getProducts);

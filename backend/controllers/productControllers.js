@@ -9,47 +9,61 @@ import asyncHandler from 'express-async-handler';
 const createProduct = asyncHandler(async (req, res) => {
   const { name, category, quantity, price, description } = req.body;
 
-  //   Validation
-  if (!name || !category || !quantity || !price || !description) {
-    res.status(400);
-    throw new Error("Please fill in all fields");
-  }
-
-  // Image upload Handler
-  let fileData = {};
-  if (req.file) {
-    // Save image to cloudinary
-    let uploadedFile;
-    try {
-      uploadedFile = await cloudinary.uploader.upload(req.file.path, {
-        folder: "Prosperio",
-        resource_type: "image",
-      });
-    } catch (error) {
-      res.status(500);
-      throw new Error("Image could not be uploaded");
+  try {
+    // Validation
+    if (!name || !category || !quantity || !price || !description) {
+      console.log("Validation error: Please fill in all fields");
+      res.status(400);
+      throw new Error("Please fill in all fields");
     }
 
-    fileData = {
-      fileName: req.file.originalname,
-      filePath: uploadedFile.secure_url,
-      fileType: req.file.mimetype,
-      fileSize: fileSizeFormatter(req.file.size, 2),
-    };
+    // Image upload Handler
+    let fileData = {};
+    if (req.file) {
+      // Save image to cloudinary
+      let uploadedFile;
+      try {
+        uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+          folder: "Prosperio",
+          resource_type: "image",
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        res.status(500);
+        throw new Error("Image could not be uploaded");
+      }
+
+      fileData = {
+        fileName: req.file.originalname,
+        filePath: uploadedFile.secure_url,
+        fileType: req.file.mimetype,
+        fileSize: fileSizeFormatter(req.file.size, 2),
+      };
+    }
+
+    // Create new Product
+    const product = await Product.create({
+      user: req.user.id,
+      name,
+      category,
+      quantity,
+      price,
+      description,
+      image: fileData,
+    });
+
+    console.log("Product created successfully:", product);
+    res.status(201).json(product);
+  } catch (error) {
+    console.error("Error creating product:", error);
+    if (error.name === "ValidationError") {
+      // Handle validation error
+      res.status(400).json({ message: error.message });
+    } else {
+      // Handle other errors
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
-
-  // Create new Product
-  const product = await Product.create({
-    user: req.user.id,
-    name,
-    category,
-    quantity,
-    price,
-    description,
-    image: fileData,
-  });
-
-  res.status(201).json(product);
 });
 
 
