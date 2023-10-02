@@ -9,12 +9,12 @@ export default function Table() {
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
-      <div className="bg-red-500 h-[15%] w-[98%] flex items-center justify-center">
+      <div className="bg-white h-[15%] w-[98%] flex items-center justify-center">
         <Search />
       </div>
       <div className="flex flex-col items-center justify-center h-[55vh] mt-3 w-[98%]">
         <table className="w-full text-center h-full">
-          <tr className="border-t-2 border-b-2 border-red-500">
+          <tr className="border-t-2 border-b-2 border-black">
             <th className="w-[5%]">S/N</th>
             <th>Name</th>
             <th>Category</th>

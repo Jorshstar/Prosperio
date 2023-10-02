@@ -7,7 +7,7 @@ import Table from "../components/table";
 export default function Board() {
   return (
     <div className="w-full flex flex-col items-center justify-between  h-[85vh]">
-      <div className="flex items-center justify-between  h-[20%] w-[98%] text-white">
+      <div className="flex items-center justify-between  h-[20%] w-[97%] text-white">
         <button className=" w-[20%] h-[90%] rounded-xl bg-[#0F1377] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#0F1377] duration-300">
           <div>
             <GiShoppingCart className="text-4xl font-semibold" />
@@ -19,7 +19,7 @@ export default function Board() {
         </button>
         <button className=" w-[20%] h-[90%] rounded-xl bg-[#0A6502] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#0A6502] duration-300">
           <div>
-            <TbCurrencyNaira className="text-4xl " />
+            <TbCurrencyNaira className="text-4xl" />
           </div>
           <div className="text-center">
             <p>Total Stock Value</p>
