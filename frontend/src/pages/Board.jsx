@@ -46,19 +46,8 @@ export default function Board() {
           </div>
         </div>
       </div>
-      <div className="bg-red-500 h-[10%] w-[98%] flex items-center justify-center">
-        <div className="flex items-center justify-between w-[95%]">
-          <p className="text-4xl font-bold">Items</p>
-          <input
-            type="search"
-            name=""
-            id=""
-            placeholder="Search by name"
-            className="placeholder:text-center h-[30px] rounded-lg w-[300px] pl-3"
-          />
-        </div>
-      </div>
-      <div className="h-[60%] w-[98%]"><Table/></div>
+      
+      <div className="h-[75%] w-[98%]"><Table/></div>
     </div>
   );
 }
