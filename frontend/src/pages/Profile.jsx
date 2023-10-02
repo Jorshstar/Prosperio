@@ -7,7 +7,7 @@ import { useProfileMutation } from "../slices/usersApiSlice";
 import { toast } from 'react-toastify';
 
 import  photo  from '../assets/profile.png';
-import photo from '../assets/profile.png'
+
 
 
 export default function Profile() {

@@ -47,8 +47,6 @@ export default function Issues() {
                 name="subject"
 
                 placeholder="Enter subject......."
-
-                placeholder="Enter subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
 

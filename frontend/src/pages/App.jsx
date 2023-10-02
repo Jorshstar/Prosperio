@@ -34,10 +34,10 @@ function App() {
 
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
-        <Route path="/dashboard/products" element={<Products />} />
-        <Route path="/dashboard/editproduct" element={<Editproduct />} />
+        <Route path="/dashboard/products/:productId" element={<Products />} />
+        <Route path="/dashboard/editproduct/:productId" element={<Editproduct />} />
         <Route path="/dashboard/addproducts" element={<Addproducts />} />
-        <Route path="/dashboard/deleteproduct" element={<Deleteproducts />} />
+        <Route path="/dashboard/deleteproduct/:productId" element={<Deleteproducts />} />
 
         {/*Private Routes*/}
         {/* <Route path ='' element={<PrivateRoute/>}> */}
