@@ -46,9 +46,9 @@ export default function Editproducts() {
   }
   
   return (
-    <div className="flex flex-col justify-center w-[80vw] h-fit">
-      <div className="flex items-start justify-center w-[90%] h-fit gap-10 mt-5">
-        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] flex flex-col items-center justify-center ">
+    <div className="flex flex-col justify-center w-[80vw] h-[85vh]">
+      <div className="flex items-center justify-center w-[90%] h-[100%] gap-10 mt-5">
+        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[95%] flex flex-col items-center justify-center ">
           <div className="h-[100%] w-[95%] ">
             <h2 className="text-2xl font-bold ">Update Product Details</h2>
 
@@ -127,9 +127,9 @@ export default function Editproducts() {
             </form>
           </div>
         </div>
-        <div className="w-[45%]">
+        <div className="w-[45%] h-[100%]">
           <p className="text-xl">Product Image:</p>
-          <img src={milo} alt="Image of a milo" />
+          <img src={milo} alt="Image of a milo" className="w-[100%] h-[92%]"/>
         </div>
       </div>
     </div>

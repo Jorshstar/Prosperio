@@ -46,16 +46,16 @@ export default function Reset() {
 
   return (
     <div className="flex items-center justify-center w-screen h-screen space-y-4">
-      <img src={log} alt="" className="h-[30%] w-[30%]" />
-      <div className="h-[70%] w-[70%] flex flex-col items-center justify-between">
-        <div className="w-[60%]">
-          <div className="flex items-center justify-between w-[100%]">
+      <img src={log} alt="" className="h-[100%] w-[30%]" />
+      <div className="h-[70%] w-[70%] flex flex-col items-center justify-between ">
+        <div className="w-[70%] ">
+          <div className="flex items-center justify-between w-[100%] ">
             <Logo1 className="" />
             <p className="text-4xl font-bold">Reset Password</p>
           </div>
         </div>
-        <div className="w-[60%] flex flex-col h-[60%] items-center justify-start space-y-4">
-          <form onSubmit={handleResetPassword}>
+        <div className="w-[70%] flex flex-col h-[60%] items-center justify-start space-y-4 ">
+          <form onSubmit={handleResetPassword} className=" w-[100%] grid gap-3">
             <input
               type="password"
               name="password"
@@ -63,7 +63,7 @@ export default function Reset() {
               placeholder="New Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full outline-none border-2 border-slate-400 text-center rounded-xl h-12"
+              className="w-full outline-none border-2 border-slate-400 text-center rounded-xl h-12 "
             />
             <input
               type="password"
