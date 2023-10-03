@@ -1,11 +1,12 @@
 import  { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import {useCreateProductMutation} from '../slices/products/productApiSlice'
 import Loader from '../components/Loader';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 import { AiFillFileImage } from 'react-icons/ai';
+import {addProduct} from '../slices/products/productSlice'
 
 export default function Addproducts() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export default function Addproducts() {
   const [ fileName, setFileName ] = useState('No file selected');
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [createProduct, { isLoading }] = useCreateProductMutation()
   
@@ -55,6 +57,8 @@ export default function Addproducts() {
 
       // Check if the mutation was successful
       if (response.data) {
+
+        dispatch(addProduct(response.data))
         // Clear the form fields and image
         setFormData({
           name: '',
@@ -63,6 +67,9 @@ export default function Addproducts() {
           quantity: '',
           description: '',
         });
+
+        
+        
 
         console.log('API RESPONSE:', response)
         setFileName('No selected file');

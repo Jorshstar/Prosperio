@@ -33,7 +33,7 @@ export default function Editproducts() {
       if (response.data) {
         toast.success("Product Updated Successfully!")
 
-        navigate(`/dashboard/products`)
+        navigate(`/dashboard/board`)
       }
     } catch (error) {
       console.error('Error updating product:', error)

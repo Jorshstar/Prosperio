@@ -16,7 +16,7 @@ export default function DeleteProduct() {
       // Check if the deletion was successful
       if (deleteProduct.fulfilled.match(response)) {
         // If deletion is successful, navigate to a success page or back to the product list.
-        navigate('/dashboard/products');
+        navigate('/dashboard/board');
       } else {
         // Handle the error and display a message to the user if needed.
         console.error('Error deleting product:', response.error);

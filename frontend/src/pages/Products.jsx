@@ -37,7 +37,7 @@ export default function Products() {
       <div className="flex items-start justify-center w-[100%] h-[100%] gap-10 mt-5">
         <div className="bg-white rounded-lg shadow-lg w-[45%] flex flex-col items-center justify-center">
           <div className=" w-[95%] ">
-            <h2 className="text-2xl font-bold ">Add Products</h2>
+            <h2 className="text-2xl font-bold ">Product Details</h2>
             <div className="flex flex-col justify-center w-[80vw]">
               <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
                 <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] flex flex-col items-center justify-center ">
@@ -90,13 +90,7 @@ export default function Products() {
                     </p>
                     <b>Description:</b>
                     <div className="text-gray-500 font-semibold">
-                      Milo is a popular chocolate malt beverage known for its
-                      harmonious blend of chocolate and malt flavors with a hint
-                      of caramel. Enjoyed hot or cold, it combines cocoa, malted
-                      barley, and milk solids to create a comforting and
-                      energizing drink. Often fortified with essential vitamins
-                      and minerals, Milo provides both a delicious taste and
-                      nutritional value.
+                      {description}
                     </div>
                     <p className="text-gray-500 font-semibold">{description}</p>
                   </div>
