@@ -4,10 +4,13 @@ import Loader from '../components/Loader';
 import { toast } from "react-toastify";
 import {useGetProductByIdQuery, useUpdateProductMutation } from "../slices/products/productApiSlice";
 import milo from "../assets/milo.png";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../slices/products/productSlice";
 
 export default function Editproducts() {
   const { productId } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   //Fetch the existing product data
   const { data: productData, isLoading: isLoadingProduct } = useGetProductByIdQuery(productId)
@@ -15,7 +18,7 @@ export default function Editproducts() {
   //state to hold product data
   const [updatedProductData, setUpdatedProductData] = useState(productData || {})
 
-  const [updateProduct, { isLoading }] = useUpdateProductMutation()
+  const [productUpdate, { isLoading }] = useUpdateProductMutation()
   
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -28,7 +31,7 @@ export default function Editproducts() {
     e.preventDefault()
 
     try {
-      const response = await updateProduct({ productId, updatedProductData })
+      const response = await productUpdate({ productId, updatedProductData })
       
       if (response.data) {
         toast.success("Product Updated Successfully!")
