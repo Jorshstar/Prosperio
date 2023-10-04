@@ -19,7 +19,7 @@ export default function Table() {
 
 
 
-
+  console.log("products", products)
   return (
     <div>
       <div className="bg-white h-[15%] w-[98%] flex items-center justify-center">
@@ -37,7 +37,8 @@ export default function Table() {
             <th>Action</th>
           </tr>
           {/*Table rows */}
-          {products.map((product, index) =>
+          
+          { products && products.length > 0 && products.map((product, index) =>
         (
           <tr key={product._id}>
             <td>{index + 1}</td>

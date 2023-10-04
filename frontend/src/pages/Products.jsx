@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../slices/products/productApiSlice";
 import Loader from "../components/Loader";
 import milo from "../assets/milo.png";
+import { Link} from "react-router-dom";
 
 export default function Products() {
   const { productId } = useParams();
@@ -37,7 +38,7 @@ export default function Products() {
       <div className="flex items-start justify-center w-[100%] h-[100%] gap-10 mt-5">
         <div className="bg-white rounded-lg shadow-lg w-[45%] flex flex-col items-center justify-center">
           <div className=" w-[95%] ">
-            <h2 className="text-2xl font-bold ">Product Details</h2>
+            <h2 className="text-2xl font-bold ">Add Products</h2>
             <div className="flex flex-col justify-center w-[80vw]">
               <div className="flex items-start justify-center w-[90%] gap-10 mt-5">
                 <div className="bg-white rounded-lg shadow-lg w-[45%] h-[100%] flex flex-col items-center justify-center ">
@@ -89,11 +90,17 @@ export default function Products() {
                       </span>
                     </p>
                     <b>Description:</b>
-                    <div className="text-gray-500 font-semibold">
-                      {description}
-                    </div>
+                    
                     <p className="text-gray-500 font-semibold">{description}</p>
                   </div>
+                  <div>
+                    <Link to="/dashboard/editproduct:productId">
+                      <button className="bg-red-500 hover:bg-red-600 text-white font-semibold text-center p-1 rounded mt-2 no-underline">
+                        Edit Profile
+                      </button>
+                    </Link>
+                  </div>
+                  
                 </div>
                 <div className="w-[45%] h-[100%]">
                   <p className="text-xl">Product Image:</p>
