@@ -1,8 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteProductMutation } from '../slices/products/productApiSlice';
+import { toast } from 'react-toastify';
 
 export default function DeleteProduct() {
-  const { productId } = useParams();
+  const { _id} = useParams();
   const navigate = useNavigate();
 
   // Use the deleteProduct mutation from productApiSlice
@@ -10,20 +11,25 @@ export default function DeleteProduct() {
 
   const handleDelete = async () => {
     try {
+      console.log("Deleting product with ID:", _id)
       // Execute the deleteProduct mutation
-      const response = await deleteProduct(productId);
+      const response = await deleteProduct(_id);
 
       // Check if the deletion was successful
-      if (deleteProduct.fulfilled.match(response)) {
+      if (response.payload) {
         // If deletion is successful, navigate to a success page or back to the product list.
         navigate('/dashboard/board');
+        toast.success("Product deleted successfully")
       } else {
         // Handle the error and display a message to the user if needed.
         console.error('Error deleting product:', response.error);
+        toast.error("Error deleting products")
       }
+
     } catch (error) {
       console.error('Error deleting product:', error);
       // Handle the error and display a message to the user if needed.
+      toast("Error deleting products!, Please try again later")
     }
   };
 

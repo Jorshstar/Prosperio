@@ -58,8 +58,11 @@ export default function Table() {
                 className=""
                 type="button"
                 onClick={() => setShowModal(true)}
-              >
-                <ImBin className="text-[#850707]" />
+                >
+              <Link to={`/dashboard/deleteProduct/${product._id}`}>
+                    <ImBin className="text-[#850707]" />
+              </Link>
+                
                 </button>
                 {showModal ? (
                 <>

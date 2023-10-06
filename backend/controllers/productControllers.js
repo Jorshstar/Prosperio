@@ -137,7 +137,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 
   // Calculate the new value based on quantity and existing price
-  let newValue = product.value;
+  const newValue = product.value;
   if (quantity !== undefined) {
     newValue = quantity * product.price;
   }
@@ -153,30 +153,36 @@ const updateProduct = asyncHandler(async (req, res) => {
   updatedFields.value = newValue; // Update the "value" field
 
   // Update Product
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(id, updatedFields, {
+  const updatedProduct = await Product.findByIdAndUpdate(
+    { _id: id },
+    {
+      name,
+      category,
+      quantity,
+      price,
+      description,
+      value: newValue,
+      image: Object.keys(fileData).length === 0 ? product?.image : fileData,
+    },
+    {
       new: true,
       runValidators: true,
-    });
-
-    if (updatedProduct) {
-      console.log("Product updated successfully:", updatedProduct);
-      res.status(200).json(updatedProduct);
-    } else {
-      console.error("Product update failed.");
-      res.status(500);
-      throw new Error("Product update failed.");
     }
-  } catch (error) {
-    console.error("Product update error:", error);
-    res.status(500).json({ error: "Product update failed." });
+  );
+  if (updatedProduct) {
+    console.log("product updated successfully", updatedProduct)
+  }else {
+    console.log("Error updating products ")
   }
+
+  res.status(200).json(updatedProduct);
 });
 
 //@desc Delete product
 //@route DELETE /api/products/:id
 //@access Private
 const deleteProduct = asyncHandler(async (req, res) => {
+    
     const product = await Product.findById(req.params.id);
     //checking if product exist
     if (!product) {
