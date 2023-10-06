@@ -4,13 +4,10 @@ import Loader from '../components/Loader';
 import { toast } from "react-toastify";
 import {useGetProductByIdQuery, useUpdateProductMutation } from "../slices/products/productApiSlice";
 import milo from "../assets/milo.png";
-import { useDispatch } from "react-redux";
-import { updateProduct } from "../slices/products/productSlice";
 
 export default function Editproducts() {
   const { productId } = useParams()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   //Fetch the existing product data
   const { data: productData, isLoading: isLoadingProduct } = useGetProductByIdQuery(productId)
@@ -18,7 +15,7 @@ export default function Editproducts() {
   //state to hold product data
   const [updatedProductData, setUpdatedProductData] = useState(productData || {})
 
-  const [productUpdate, { isLoading }] = useUpdateProductMutation()
+  const [updateProduct, { isLoading }] = useUpdateProductMutation()
   
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -31,7 +28,7 @@ export default function Editproducts() {
     e.preventDefault()
 
     try {
-      const response = await productUpdate({ productId, updatedProductData })
+      const response = await updateProduct({ productId, updatedProductData })
       
       if (response.data) {
         toast.success("Product Updated Successfully!")
@@ -50,8 +47,8 @@ export default function Editproducts() {
   
   return (
     <div className="flex flex-col justify-center w-[80vw] h-[85vh]">
-      <div className="flex items-center justify-center w-[90%] h-[100%] gap-10 mt-5">
-        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[95%] flex flex-col items-center justify-center ">
+      <div className="flex items-center justify-center w-[100%] h-[100%] gap-10">
+        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[88%] flex flex-col items-center justify-center ">
           <div className="h-[100%] w-[95%] ">
             <h2 className="text-2xl font-bold ">Update Product Details</h2>
 
@@ -113,7 +110,7 @@ export default function Editproducts() {
                 <textarea
                   id="description"
                   name="description"
-                  rows={6}
+                  rows={5}
                   placeholder="Product Description"
                   className="w-full border border-gray-400 p-2 rounded-lg"
                   value={updatedProductData?.description || productData?.description}

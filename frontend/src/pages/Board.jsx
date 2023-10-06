@@ -35,7 +35,7 @@ export default function Board() {
             <p>4</p>
           </div>
         </button>
-        <div className=" w-[20%] h-[90%] rounded-xl bg-[#530441] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#530441] duration-300">
+        <button className=" w-[20%] h-[90%] rounded-xl bg-[#530441] flex items-center justify-evenly transition ease-in-out delay-150 hover:-translate-1 hover:scale-110 hover:bg-[#530441] duration-300">
           {" "}
           <div>
             <BsListCheck className="text-4xl " />
@@ -44,7 +44,7 @@ export default function Board() {
             <p>All Categories</p>
             <p>4</p>
           </div>
-        </div>
+        </button>
       </div>
       
       <div className="h-[75%] w-[98%]"><Table/></div>
