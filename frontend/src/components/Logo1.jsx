@@ -8,7 +8,7 @@ function Logo1() {
         <div className="border-2 border-red-500 w-[40px] h-[40px] rounded-full flex items-center justify-center hover:text-white hover:bg-red-500  text-center transition">
         <div className="text-red-500 text-[25px] font-normal hover:text-white transition">P</div>
     </div>
-    <p className="text-[25px] font-semibold ">Prosperio</p>
+    <p className="text-black text-[25px] font-semibold ">Prosperio</p>
     </div>
     </Link>
   )
