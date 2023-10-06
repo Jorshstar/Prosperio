@@ -47,8 +47,8 @@ export default function Editproducts() {
   
   return (
     <div className="flex flex-col justify-center w-[80vw] h-[85vh]">
-      <div className="flex items-center justify-center w-[90%] h-[100%] gap-10 mt-5">
-        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[95%] flex flex-col items-center justify-center ">
+      <div className="flex items-center justify-center w-[100%] h-[100%] gap-10">
+        <div className="bg-white rounded-lg shadow-lg w-[45%] h-[88%] flex flex-col items-center justify-center ">
           <div className="h-[100%] w-[95%] ">
             <h2 className="text-2xl font-bold ">Update Product Details</h2>
 
@@ -110,7 +110,7 @@ export default function Editproducts() {
                 <textarea
                   id="description"
                   name="description"
-                  rows={6}
+                  rows={5}
                   placeholder="Product Description"
                   className="w-full border border-gray-400 p-2 rounded-lg"
                   value={updatedProductData?.description || productData?.description}
