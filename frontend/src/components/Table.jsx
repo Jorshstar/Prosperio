@@ -13,9 +13,19 @@ export default function Table() {
   const products = useSelector((state) => state.product.products);
 
   const handleDeleteProduct = (productId) => {
+
     dispatch(deleteProduct(productId));
     showModal(false);
   };
+
+
+    dispatch(deleteProduct(productId))
+    showModal(false)
+  }
+
+
+
+  console.log("products", products)
 
   return (
     <div>
@@ -36,6 +46,7 @@ export default function Table() {
             </tr>
           </thead>
           {/*Table rows */}
+
           <tbody className=" h-[300px] overflow-y-auto ">
             {products.map((product, index) => (
               <tr
@@ -64,6 +75,31 @@ export default function Table() {
                     </Link>
                   </p>
                 </td>
+
+          
+          { products && products.length > 0 && products.map((product, index) =>
+        (
+          <tr key={product._id}>
+            <td>{index + 1}</td>
+            <td>{product.name}</td>
+            <td>{product.category}</td>
+            <td>#{product.price}</td>
+            <td>{product.quantity}</td>
+            <td>#{product.value}</td>
+            <td className="flex items-center justify-evenly mt-2">
+              <Link to={`/dashboard/products/${product._id}`}>
+                <BsEye className="text-[#0F1377]" />
+              </Link>{" "}
+              <Link to={`/dashboard/editproduct/${product._id}`}>
+                <HiOutlineRefresh className="text-[#0A6502]" />
+                </Link>{" "}
+                <button
+                className=""
+                type="button"
+                onClick={() => setShowModal(true)}
+              >
+                <ImBin className="text-[#850707]" />
+                </button>
 
                 {showModal ? (
                   <>
