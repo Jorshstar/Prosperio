@@ -1,29 +1,37 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteProductMutation } from '../slices/products/productApiSlice';
+import { deleteProduct } from '../slices/products/productSlice';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 export default function DeleteProduct() {
-  const { _id} = useParams();
+  const { id} = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   // Use the deleteProduct mutation from productApiSlice
-  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+  const [productDelete, { isLoading }] = useDeleteProductMutation();
 
   const handleDelete = async () => {
     try {
-      console.log("Deleting product with ID:", _id)
+      console.log("Deleting product with ID:", id)
       // Execute the deleteProduct mutation
-      const response = await deleteProduct(_id);
+      const response = await productDelete(id);
 
       // Check if the deletion was successful
       if (response.payload) {
         // If deletion is successful, navigate to a success page or back to the product list.
+
+        dispatch(deleteProduct(id))
+
         navigate('/dashboard/board');
         toast.success("Product deleted successfully")
       } else {
         // Handle the error and display a message to the user if needed.
-        console.error('Error deleting product:', response.error);
-        toast.error("Error deleting products")
+        console.log('Product deleted successfully');
+        toast.success("Product deleted Successfully")
+
+        navigate('/dashboard/board');
       }
 
     } catch (error) {
@@ -50,7 +58,7 @@ export default function DeleteProduct() {
           <button
             className="text-white bg-blue-500 hover:bg-blue-300 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
             type="button"
-            onClick={() => navigate('/dashboard/products')}
+            onClick={() => navigate('/dashboard/board')}
             disabled={isLoading}
           >
             Cancel

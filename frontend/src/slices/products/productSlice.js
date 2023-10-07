@@ -18,16 +18,16 @@ const productSlice = createSlice({
     },
     updateProduct: (state, action) => {
       // Find and update a product in the array
-      const { productId, updatedProduct } = action.payload;
-      const productIndex = state.products.findIndex(product => product.id === productId);
+      const { id, updatedProduct } = action.payload;
+      const productIndex = state.products.findIndex(product => product?.id === id);
       if (productIndex !== -1) {
         state.products[productIndex] = updatedProduct;
       }
     },
     deleteProduct: (state, action) => {
       // Remove a product from the array
-      const productId = action.payload;
-      state.products = state.products.filter(product => product.id !== productId);
+      const id = action.payload;
+      state.products = state.products.filter(product => product.id !== id);
     },
   },
 });

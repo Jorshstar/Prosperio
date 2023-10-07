@@ -1,21 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
-import  {  useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Loader from '../components/Loader';
 import { toast } from "react-toastify";
-import {useGetProductByIdQuery, useUpdateProductMutation } from "../slices/products/productApiSlice";
+import { useGetProductByIdQuery, useUpdateProductMutation } from "../slices/products/productApiSlice";
+import { updateProduct } from "../slices/products/productSlice";
 import milo from "../assets/milo.png";
 
 export default function Editproducts() {
-  const { productId } = useParams()
+  const { id } = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   //Fetch the existing product data
-  const { data: productData, isLoading: isLoadingProduct } = useGetProductByIdQuery(productId)
+  const { data: productData, isLoading: isLoadingProduct } = useGetProductByIdQuery(id)
   
   //state to hold product data
   const [updatedProductData, setUpdatedProductData] = useState(productData || {})
 
-  const [updateProduct, { isLoading }] = useUpdateProductMutation()
+  const [productUpdate, { isLoading }] = useUpdateProductMutation()
   
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -28,10 +31,12 @@ export default function Editproducts() {
     e.preventDefault()
 
     try {
-      const response = await updateProduct({ productId, updatedProductData })
+      const response = await productUpdate({ id, updatedProductData })
       
       if (response.data) {
         toast.success("Product Updated Successfully!")
+
+        dispatch(updateProduct(response.data))
 
         navigate(`/dashboard/board`)
       }

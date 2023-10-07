@@ -136,21 +136,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     }
   }
 
-  // Calculate the new value based on quantity and existing price
-  const newValue = product.value;
-  if (quantity !== undefined) {
-    newValue = quantity * product.price;
-  }
-
-  // Check if any fields have changed before updating
-  const updatedFields = {};
-  if (name) updatedFields.name = name;
-  if (category) updatedFields.category = category;
-  if (quantity !== undefined) updatedFields.quantity = quantity;
-  if (price !== undefined) updatedFields.price = price;
-  if (description) updatedFields.description = description;
-  if (Object.keys(fileData).length > 0) updatedFields.image = fileData;
-  updatedFields.value = newValue; // Update the "value" field
+  const newValue = price * quantity
 
   // Update Product
   const updatedProduct = await Product.findByIdAndUpdate(
@@ -160,8 +146,8 @@ const updateProduct = asyncHandler(async (req, res) => {
       category,
       quantity,
       price,
-      description,
       value: newValue,
+      description,
       image: Object.keys(fileData).length === 0 ? product?.image : fileData,
     },
     {
@@ -169,10 +155,11 @@ const updateProduct = asyncHandler(async (req, res) => {
       runValidators: true,
     }
   );
+
   if (updatedProduct) {
-    console.log("product updated successfully", updatedProduct)
-  }else {
-    console.log("Error updating products ")
+    console.log("Product updated successfully:", updatedProduct);
+  } else {
+    console.log("Product update failed.");
   }
 
   res.status(200).json(updatedProduct);

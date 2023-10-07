@@ -13,7 +13,7 @@ import Addproducts from "./Addproducts";
 import Forgetten from "./Forgetten";
 import Reset from "./Reset";
 import Editproduct from "./Editproduct";
-// import PrivateRoute from "../components/privateRoute";
+import PrivateRoute from "../components/privateRoute";
 import Deleteproducts from "./Deleteproducts";
 
 function App() {
@@ -34,16 +34,17 @@ function App() {
 
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="/dashboard/board" element={<Board />} />
-        <Route path="/dashboard/products/:productId" element={<Products />} />
-        <Route path="/dashboard/editproduct/:productId" element={<Editproduct />} />
-        <Route path="/dashboard/addproducts" element={<Addproducts />} />
-        <Route path="/dashboard/deleteproduct/:productId" element={<Deleteproducts />} />
+        
 
         {/*Private Routes*/}
-        {/* <Route path ='' element={<PrivateRoute/>}> */}
+        <Route path='' element={<PrivateRoute />}>
+          <Route path="/dashboard/products/:id" element={<Products />} />
+        <Route path="/dashboard/editproduct/:id" element={<Editproduct />} />
+        <Route path="/dashboard/addproducts" element={<Addproducts />} />
+        <Route path="/dashboard/deleteproduct/:id" element={<Deleteproducts />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/dashboard/update" element={<Updateprofile />} />
-        {/* </Route> */}
+        </Route>
         <Route path="/dashboard/issues" element={<Issues />} />
         <Route path="/dashboard/settings" element={<Settings />} />
       </Route>
