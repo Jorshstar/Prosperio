@@ -1,5 +1,6 @@
 import express from 'express';
 
+
 import { 
     deleteProfile,
     getProfile,
@@ -13,7 +14,7 @@ import {
     resetPassword,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
-import { validateUserFields } from '../middleware/userValidator.js';
+import { validateUserFields, validateUpdateProfile } from '../middleware/userValidator.js';
 
 const router = express.Router();
 
@@ -63,7 +64,7 @@ router.get('/me', protect, getProfile)
 router.get('/loggedin', protect, loginStatus)
 
 // Update user profile route
-router.put('/updateProfile', protect, updateProfile)
+router.put('/updateProfile', validateUpdateProfile, protect, updateProfile)
 
 // Delete user profile route
 router.delete('/deleteProfile', protect, deleteProfile)

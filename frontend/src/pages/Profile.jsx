@@ -5,8 +5,7 @@ import Loader from "../components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { toast } from 'react-toastify';
-
-import  photo  from '../assets/profile.png';
+import photo  from '../assets/nymous 2.jfif'
 
 
 
@@ -25,6 +24,7 @@ export default function Profile() {
     email: userInfo?.email,
     phoneNumber: userInfo?.phoneNumber,
     bio: userInfo?.bio,
+    profileImage: userInfo?.photo
   }
 
   const [profile] = useState(initialState)
@@ -55,7 +55,8 @@ export default function Profile() {
         phoneNumber: profile.phoneNumber,
         bio: profile.bio,
         email: profile.email,
-        userName: profile,
+        userName: profile.userName,
+        profileImage: profile.profileImage
       };
 
       const updatedProfile = await profileinfo(formData);
@@ -123,7 +124,7 @@ export default function Profile() {
         </div>
         <div className="w-[45%] h-[100%] flex flex-col gap-7">
           <p className="text-xl">Profile Image:</p>
-          <img src={photo} alt="Image of a milo" />
+          <img src={profile.profileImage} alt="Image of anonymous" />
         </div>
       </div>
     </div>

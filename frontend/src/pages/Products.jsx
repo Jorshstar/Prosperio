@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../slices/products/productApiSlice";
 import Loader from "../components/Loader";
-import milo from "../assets/milo.png";
+import photo from "../assets/product.jfif";
 import { Link } from "react-router-dom";
 
 export default function Products() {
@@ -81,7 +81,7 @@ export default function Products() {
         {/* Right Section */}
         <div className="w-[45%]">
           <p className="text-xl">Product Image:</p>
-          <img src={milo} alt="Image of a milo" className="h-[92%] w-[100%]" />
+          <img src={photo} alt="Image of a milo" className="h-[92%] w-[100%]" />
           <img src={productData.image} alt={`Image of ${name}`} />
         </div>
       </div>

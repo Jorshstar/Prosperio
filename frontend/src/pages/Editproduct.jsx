@@ -58,6 +58,7 @@ export default function Editproducts() {
             <h2 className="text-2xl font-bold ">Update Product Details</h2>
 
             <form className="" onSubmit={handleSubmit}>
+              {isLoading && <Loader/>}
               <div className="">
                 <label htmlFor="subject" className="font-bold">
                   Product Name :
@@ -128,7 +129,7 @@ export default function Editproducts() {
             >
               Update Product
               </button>
-              {isLoading && <Loader/>}
+              
             </form>
           </div>
         </div>

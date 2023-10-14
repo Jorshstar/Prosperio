@@ -103,6 +103,7 @@ export default function Addproducts() {
         <div className="bg-white rounded-lg shadow-lg w-[45%] h-[95%] px-3 ">
         <h2 className="text-2xl font-bold ">Add Products Details</h2>
           <form className="" onSubmit={handleSubmit}>
+            {isLoading && <Loader/>}
             <div className="">
               <label htmlFor="subject" className="font-bold">
                 product Name:
@@ -170,7 +171,7 @@ export default function Addproducts() {
             >
               Add Products
           </button>
-            {isLoading && <Loader/>}
+            
           </form>
         </div>
         <div className="w-[45%] flex flex-col justify-center gap-5 h-[95%]">
