@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { toast } from 'react-toastify';
 
-import  photo  from '../assets/profile.png';
+import  photo  from '../assets/profile.jpg'
 
 
 
@@ -89,8 +89,7 @@ export default function Profile() {
                     {`${profile.firstName} ${profile.lastName}`}
                 </p>
 
-                <p className="font-bold  border-gray-300 mb-0 mt-1">Username : </p>
-.                <p className="text-gray-500 font-semibold mb-1 mt-0">
+                <p className="font-bold  border-gray-300 mb-0 mt-1">Username : </p>         <p className="text-gray-500 font-semibold mb-1 mt-0">
                   {profile.userName}
                 </p>
 

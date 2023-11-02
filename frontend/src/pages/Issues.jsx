@@ -83,13 +83,13 @@ export default function Issues() {
           </p>
           <div className="w-[80%] flex flex-col items-start justify-center">
             <p className="flex items-center justify-center gap-3 ">
-              <BsTelephone /> +2349036788725
+              <BsTelephone /> +23400007777
             </p>
             <p className="flex items-center justify-center gap-3 ">
-              <GrMail className="text-black" /> your.exa.ple@gmail.com
+              <GrMail className="text-black" />prosperio-alx@gmail.com
             </p>
             <p className="flex items-center justify-center gap-3">
-              <BsTwitter className="text-blue-500" /> @Jodfhgnsngd
+              <BsTwitter className="text-blue-500" /> @prosperio
             </p>
           </div>
         </div>
